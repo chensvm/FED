@@ -63,28 +63,32 @@ tense_threshold = 0
 p1 = 0.0
 for day in news_for_future:
 	for article in day:
-		out = determine_input(article)
-		# print(str('sentence:{}').format(article))
-		# print('============================================================')
-		print(str('<before FED> tense:{}, polarity:{}').format(out['tense'], out['polarity']))
-		if out['tense'] > tense_threshold:
-			p1 += out['polarity']
+		for sentence in article.split('\n'):
+			if len(sentence) > 1:
+				out = determine_input(sentence)
+				print(str('sentence:{}').format(sentence))
+				# print('============================================================')
+				print(str('<before FED> tense:{}, polarity:{}').format(out['tense'], out['polarity']))
+				if out['tense'] > tense_threshold:
+					p1 += out['polarity']
 
 # getting polarity for news after FED
 p2 = 0.0
 for day in news_for_past:
 	for article in day:
-		out = determine_input(article)
-		# print(str('sentence:{}').format(article))
-		# print('============================================================')
-		print(str('<after FED> tense:{}, polarity:{}').format(out['tense'], out['polarity']))
-		if out['tense'] < -tense_threshold:
-			p2 += out['polarity']
+		for sentence in article.split('\n'):
+			if len(sentence) > 1:
+				out = determine_input(sentence)
+				print(str('sentence:{}').format(sentence))
+				# print('============================================================')
+				print(str('<after FED> tense:{}, polarity:{}').format(out['tense'], out['polarity']))
+				if out['tense'] < -tense_threshold:
+					p2 += out['polarity']
 
 # threshold for polarity classification
 polarity_threshold = 0.05
 print(str('p1:{}, p2:{}').format(p1,p2))
-p = p1 + p2
+p = p1 # + p2
 if p > polarity_threshold:
 	# rise
 	pass
