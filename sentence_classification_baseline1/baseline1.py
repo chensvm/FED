@@ -28,7 +28,7 @@ news = []
 for fns in filenamestr:
 	news.append(np.load(fns))
 
-# TODO: 
+# TODO: only doing future now
 p1 = 0.0
 p2 = 0.0
 for day in news:
@@ -40,8 +40,17 @@ for day in news:
 		if out['tense'] > 0:
 			p2 += out['polarity']
 
-print('final polarity:'+str(p2))
 
+threshold = 0.05
+if p2 > threshold:
+	# rise
+	pass
+elif p2 < -threshold:
+	# fall
+	pass
+else:
+	# neutral
+	pass
 
 
 
