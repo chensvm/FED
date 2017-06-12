@@ -19,7 +19,10 @@ def determine_input(sentence):
     past = len([word for word in tagged if word[1] in ["VBD", "VBN"]]) 
     tsum = future + present + past
     #TODO: tense function (baseline)
-    tense = (past/tsum)*-1.0 + (present/tsum)*0.25 + (future/tsum)*1.0
+    if tsum == 0:
+        tense = 0
+    else:
+        tense = (past/tsum)*-1.0 + (present/tsum)*0.25 + (future/tsum)*1.0
     # NewValue = (((OldValue - OldMin) * (NewMax - NewMin)) / (OldMax - OldMin)) + NewMin
     out['tense'] = (((tense + 1.0) * (1.0 + 1.0)) / (1.25 + 1.0)) - 1.0
 
