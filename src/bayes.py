@@ -3,6 +3,7 @@ import re
 import math
 import sys
 import os
+import nltk
 from textblob import TextBlob
 from textblob.classifiers import NaiveBayesClassifier
 from nltk.corpus import stopwords
@@ -10,16 +11,22 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 
+
 def loadDataSet():
     postingList = []
+    classVec = []
+    posNum = 0
+    negNum = 0
 
     with open('../training_articles/positive.txt', 'r') as myfile:
-        data = myfile.read().replace('\n', ' ')
-        regEx = re.compile('\\W*')
-        listOfTokens = regEx.split(data)
-        listOfTokens = [tok.lower() for tok in listOfTokens if len(tok) > 0]
-        #filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
-        postingList.append(listOfTokens)
+        data = myfile.readlines()
+        for news in data:
+            regEx = re.compile('\\W*')
+            listOfTokens = regEx.split(news)
+            listOfTokens = [tok.lower() for tok in listOfTokens if len(tok) > 0]
+            filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+            posNum += 1
+            postingList.append(filtered_words)
 
 
     with open('../training_articles/negative.txt', 'r') as myfile:
@@ -27,9 +34,18 @@ def loadDataSet():
         regEx = re.compile('\\W*')
         listOfTokens = regEx.split(data)
         listOfTokens = [tok.lower() for tok in listOfTokens if len(tok) > 0]
-        # filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+        filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+        negNum += 1
+        postingList.append(filtered_words)
 
-        postingList.append(listOfTokens)
+    print posNum
+    print negNum
+
+    for i in range(0, posNum-1):
+        classVec[i] = 1
+
+    for j in range(posNum, negNum-1):
+        classVec[j] = -1
 
     classVec = [1, -1]
 
@@ -116,7 +132,9 @@ def testingNB():
                 testEntry.append(listOfTokens)
                 # testEntry = ['love', 'my', 'dalmation']
                 thisDoc = array(setOfWords2Vec(myVocabList, testEntry))
-                print line, 'classified as: ', classifyNB(thisDoc, p0V, p1V, pAb)
+                with open ('result.txt', 'w') as ff:
+                    ff.write(line, 'classified as: ', classifyNB(thisDoc, p0V, p1V, pAb))
+                    print line, 'classified as: ', classifyNB(thisDoc, p0V, p1V, pAb)
 
 ########################################################################################################
 
@@ -153,7 +171,16 @@ def readTestingFileList():
 
     f.close()
 
+def emptyFile():
+    open('../training_articles/positive.txt', 'w').close()
+    open('../training_articles/neutral.txt', 'w').close()
+    open('../training_articles/negative.txt', 'w').close()
+
+
 def loadNpy():
+    open('../training_articles/positive.txt', 'w').close()
+    open('../training_articles/neutral.txt', 'w').close()
+    open('../training_articles/negative.txt', 'w').close()
 
     with open('../training_articles/file.txt', 'r') as myfile:
         content = myfile.readlines()
@@ -167,30 +194,33 @@ def loadNpy():
                 with open('../training_articles/positive.txt', 'a') as f:
                     data = load('../training_articles/' + str(fileName))
                     for news in data:
-                        news.replace('\n', ' ')
-                        f.write(news + ' ')
+                        text = "\n".join([ll.rstrip() for ll in news.splitlines() if ll.strip()])
+                        f.write(text)
 
             if str(cate).rstrip().replace(" ", "") == '0.0':
                 print "0.0"
                 with open('../training_articles/neutral.txt', 'a') as g:
                     data = load('../training_articles/' + str(fileName))
                     for news in data:
-                        news.replace('\n', ' ')
-                        g.write(news + ' ')
+                        text = "\n".join([ll.rstrip() for ll in news.splitlines() if ll.strip()])
+                        g.write(text)
 
             if str(cate).rstrip().replace(" ", "") == '-1.0':
                 print "-1.0"
                 with open('../training_articles/negative.txt', 'a') as h:
                     data = load('../training_articles/' + str(fileName))
                     for news in data:
-                        news.replace('\n', ' ')
-                        h.write(news + ' ')
+                        text = "\n".join([ll.rstrip() for ll in news.splitlines() if ll.strip()])
+                        h.write(text)
 
 
-# def preprocessingText():
-#     with open('../training_articles/neutral.txt', 'w') as g:
-#         stop = set(stopwords.words('english'))
-#         i for i in sentence.lower().split() if i not in stop
+def preprocessingText():
+    with open('../training_articles/positive.txt', 'w') as g:
+        stop = set(stopwords.words('english'))
+        news = g.readlines()
+        filtered = filter(lambda x: not re.match(r'^\s*$', x), news)
+        print filtered
+        # i for i in sentence.lower().split() if i not in stop
 
 def textBlobClassfier():
     train = []
@@ -268,7 +298,7 @@ def textBlobClassfier():
 
 
 if __name__ == '__main__':
+
     # loadNpy()
-   #textBlobClassfier()
-    testingNB()
+    loadDataSet()
     # testingNB()
