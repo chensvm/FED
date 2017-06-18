@@ -1,5 +1,5 @@
-# Sentence Classification Baseline with nltk  
-### Determines the tense and the polarity of the sentence using nltk SentimentAnalyzer, WordTokenizer, and pos_tagger.  
+## Sentence Classification Baseline with nltk  
+Determines the tense and the polarity of the sentence using nltk SentimentAnalyzer, WordTokenizer, and pos_tagger.  
 
 method:  
 Get all sentences from news in between two meeting dates.  
@@ -16,6 +16,7 @@ The function determine_input() takes in a single sentence as input, and outputs 
 > dict['polarity'] = float ranging from -1.0 to 1.0 (-1.0:negative, 1.0:positive)  
 
 See test.py for example.  
+
 
 ### baseline1.py usage:
 > python3 baseline1.py <year_start> <month_start> <day_start> <year_FED> <month_FED> <day_FED> <year_end> <month_end> <day_end>
