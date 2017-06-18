@@ -1,12 +1,13 @@
 ## csv file usage
 
 first line of file contains header:  
-> "date,rate"
+> date,rate
 
 second line onwards contain values:  
-> "<yyyy-mm-dd>,{-1,0,1}"  
--1:fall, 0:maintain, 1:rise  
+> yyyy-mm-dd,{-1,0,1}  
 > example: 2000-13-31,-1
+
+-1:fall, 0:maintain, 1:rise  
 
 ## first 10 lines of fed_date_rate_testing.csv
 
