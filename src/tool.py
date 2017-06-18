@@ -3,19 +3,29 @@ import re
 import numpy as np
 
 
-#Generate class.txt for testing_articles
-f = open('../training_articles/class.txt', 'w')
-for file in os.listdir("../training_articles"):
-    file = file.replace(".npy", "")
-    f.write(file+", s\n")  # python will convert \n to os.linesep
-f.close()
+def readTrainingFileList():
+    f = open('../training_articles/file.txt', 'w')
+    for file in os.listdir("../training_articles"):
+        if file == ".DS_Store":
+            pass
+        elif file == "file.txt":
+            pass
+        else:
+            f.write(file+"\n")  # python will convert \n to os.linesep
+    f.close()
 
-#Generate class.txt for training_articles
-f = open('../testing_articles/class.txt', 'w')
-for file in os.listdir("../testing_articles"):
-    file = file.replace(".npy", "")
-    f.write(file+", s\n")  # python will convert \n to os.linesep
-f.close()
+
+def readTestingFileList():
+    f = open('../testing_articles/file.txt', 'w')
+    for file in os.listdir("../testing_articles"):
+        if file == ".DS_Store":
+            pass
+        elif file == "file.txt":
+            pass
+        else:
+            f.write(file + "\n")  # python will convert \n to os.linesep
+
+    f.close()
 #
 # data = np.load('../testing_articles/20130101.npy')
 # for line in data:
@@ -92,4 +102,7 @@ f.close()
 #
 #             continue
 
+if __name__ == "__main__":
+    readTrainingFileList()
+    readTestingFileList()
 
