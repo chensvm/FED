@@ -10,8 +10,17 @@ def readTrainingFileList():
             pass
         elif file == "file.txt":
             pass
-        else:
-            f.write(file+"\n")  # python will convert \n to os.linesep
+        elif "20050203.npy" <= file <= "20060807.npy":
+            f.write(file+", 1.0\n")
+        elif "20060808.npy" <= file <= "20070807.npy":
+            f.write(file + ", 0.0\n")
+        elif "20070808.npy" <= file <= "20080430.npy":
+            f.write(file + ", -1.0\n")
+        elif "20080501.npy" <= file <= "20080916.npy":
+            f.write(file + ", -1.0\n")
+        elif "20080917.npy" <= file <= "20081216.npy":
+            f.write(file + ", -1.0\n")
+
     f.close()
 
 
@@ -104,5 +113,5 @@ def readTestingFileList():
 
 if __name__ == "__main__":
     readTrainingFileList()
-    readTestingFileList()
+    # readTestingFileList()
 
