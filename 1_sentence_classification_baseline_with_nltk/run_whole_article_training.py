@@ -8,7 +8,7 @@ import os.path
 article_path = '/tmp2/finance/nytimes/'
 rates_path = '../fed_rates/'
 rates_file = rates_path + 'fed_date_rate_training.csv'
-outputfilename = 'training_predictions.txt'
+outputfilename = 'training_predictions_whole_article.txt'
 
 ## getting meeting date and rate
 rates = {}
@@ -56,14 +56,15 @@ for ind,ser in enumerate(start_end_rate):
 		if os.path.isfile(article_path+f):
 			day = np.load(article_path+f)
 			for article in day:
-				for sentence in article.split('\n'):
-					if len(sentence) > 1:
-						data_for_date[date_of_meeting].append(sentence)
+				data_for_date[date_of_meeting].append(article)
+				# for sentence in article.split('\n'):
+				# 	if len(sentence) > 1:
+				# 		data_for_date[date_of_meeting].append(sentence)
 
 ## getting positive and negative sentences for each day and predict
 tense_threshold = 0.
 polarity_threshold = 0.05
-rate_threshold = 50
+rate_threshold = 2
 corrects = 0
 with open(outputfilename,'w') as fout:
 	for d in data_for_date:

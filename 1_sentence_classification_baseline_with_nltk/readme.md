@@ -4,13 +4,24 @@ Determines the tense and the polarity of the sentence using nltk SentimentAnalyz
 ---
 
 method:  
-Get all sentences from news in between two meeting dates.  
-Remove sentences with past reference.  
-Classify senteces into positive and negative polarity.  
+1.Get all news articles in between two meeting dates.  
+2.Split articles into sentences.  
+3.Remove articles and sentences with past reference.  
+4.Classify articles and sentences into positive and negative polarity.  
+5.Use articles OR sentences to predict rate.
 If pos - neg > threshold, predict rise.  
 If neg - pos > threshold, predict fall.  
 Else, predict maintain.  
-> accuracy: 0.189 on testing data
+
+> accuracy on testing data:
+> 0.189 (11/58) using classified sentences, threshold:50
+> 0.448 (26/58) using classified articles, threshold:2  
+> 0.379 (22/58) using classified articles, threshold:1   
+
+> accuracy on training data:
+> 0.352 (12/34) using classified sentences, threshold:50
+> 0.264 (9/34) using classified articles, threshold:2
+> 0.352 (12/34) using classified articles, threshold:1  
 
 ---
 
