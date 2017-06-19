@@ -13,14 +13,14 @@ If pos - neg > threshold, predict rise.
 If neg - pos > threshold, predict fall.  
 Else, predict maintain.  
 
-> accuracy on testing data:
-> 0.189 (11/58) using classified sentences, threshold:50
+> accuracy on testing data:  
+> 0.189 (11/58) using classified sentences, threshold:50  
 > 0.448 (26/58) using classified articles, threshold:2  
 > 0.379 (22/58) using classified articles, threshold:1   
 
-> accuracy on training data:
-> 0.352 (12/34) using classified sentences, threshold:50
-> 0.264 (9/34) using classified articles, threshold:2
+> accuracy on training data:  
+> 0.352 (12/34) using classified sentences, threshold:50  
+> 0.264 (9/34) using classified articles, threshold:2  
 > 0.352 (12/34) using classified articles, threshold:1  
 
 ---
