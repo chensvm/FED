@@ -16,6 +16,10 @@ from keras.preprocessing import sequence
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing import sequence
+from keras.utils.np_utils import to_categorical
+from keras.utils import np_utils
+from sklearn.preprocessing import LabelEncoder
+import matplotlib.pyplot as plt
 import pickle
 import json
 print(round(12.5656, 1))
@@ -33,18 +37,30 @@ top_words = 5000 # 5000 20000
 # truncate and pad input sequences
 max_review_length = 500 # 500
 
+#number of epoch
+num_epoch = 15
+
 #article_path = '/tmp2/finance/nytimes/'# for hp machine
-#article_train_path = '/tmp2/finance2/nytimes/training_data/' # for hp, cuda3 machine
+article_train_path = '/tmp2/finance2/nytimes/training_data/' # for hp, cuda3 machine 2005~2008
 #article_train_path = '/tmp2/finance2/nytimes/temp/'# 2005 
-article_train_path = '/tmp2/finance2/nytimes/temp2/'# 2005~2007
-#article_train_path = '/tmp2/finance2/nytimes/temp_2008/'#2008 data has problem
+#article_train_path = '/tmp2/finance2/nytimes/temp2/'# 2005~2007
+#article_train_path = '/tmp2/finance2/nytimes/temp_2008/'#
 article_test_path = '/tmp2/finance2/nytimes/testing1998_2004/'# 1998~2004
+#article_test_path = '/tmp2/finance2/nytimes/2000_2001/'# 2000~2001
 #article_test_path = '/tmp2/finance2/nytimes/temp_2004/'# 2004
-token_file = 'token1998_2008_index.pkl'#1998~2008
+#article_test_path = '/tmp2/finance2/nytimes/2001/'# 2001
+token_path = './token_index/' 
+#token_file = token_path + 'token2004_2005_index.pkl'#2004~2005
+token_file = token_path + 'token1998_2008_index.pkl'#1998~2008
+#token_file = token_path + 'token2000_2001_index.pkl'#2000~2001
+#token_file = token_path + 'token2008_index.pkl'#2008
+
 rates_path = '../fed_rates/'
 rates_train_file = rates_path + 'fed_date_rate_training.csv'
 rates_test_file = rates_path + 'fed_date_rate_testing.csv'
-outputfilename = 'testing_predictions_train_2005_2007_test_1998_2004_wi=88584_tw=5000_mrl=500_nb_epoch=10_Dropout=0.2.txt'
+#outputfilename = 'training_predictions_train_2008_test_2008_wi=88584_tw=5000_mrl=500_nb_epoch=10_Dropout=0.2.txt'
+#outputfilename = 'testing_predictions_train_2005_2008_test_2000_2001_wi=88584_tw=5000_mrl=500_nb_epoch=10_Dropout=0.2.txt'
+outputfilename = 'testing_predictions_train_2005_2008_test_1998_2004_wi=88584_tw=5000_mrl=500_nb_epoch=15_Dropout=0.2.txt'
 #outputfilename = 'testing_predictions_train_2005_test_2004_wi=88584_tw=5000_mrl=500_nb_epoch=3_Dropout=0.2.txt'
 # fix random seed for reproducibility
 np.random.seed(7)
@@ -168,23 +184,27 @@ tokenizer = del_higher_top_words(tokenizer, top_words)
 #print(tokenizer.word_index)
 #print('tokenizer.word_index[good]')
 #print(tokenizer.word_index['good'])
-
+encoder = LabelEncoder()
 X_train , y_train, train_tokenizer = load_data(article_train_path, rates_train_file, top_words, tokenizer)
-print('train_tokenizer')
-print(train_tokenizer.word_index["bad"])
-print('train_tokenizer2')
-print(train_tokenizer.word_index["bad"])
-print('train_tokenizer')
-print(train_tokenizer)
 
+# encode class values as integers
+encoder.fit(y_train)
+encoded_Ytrain = encoder.transform(y_train)
+# convert integers to dummy variables (i.e. one hot encoded)
+y_train_onehot = np_utils.to_categorical(encoded_Ytrain)
+print('y_train_onehot')
+print(y_train_onehot)
+print('print(encoder.classes_)')
+print(encoder.classes_)
+print('print(encoder.classes_[0])')
+print(encoder.classes_[0])
 
 X_test , y_test, test_tokenizer = load_data(article_test_path, rates_test_file, top_words, train_tokenizer)
-print('test_tokenizer')
-print(test_tokenizer.word_index["bad"])
-print('test_tokenizer2')
-print(test_tokenizer.word_index["bad"])
-print('test_tokenizer')
-print(test_tokenizer)
+
+encoded_Ytest = encoder.transform(y_test)
+# convert integers to dummy variables (i.e. one hot encoded)
+y_test_onehot = np_utils.to_categorical(encoded_Ytest)
+
 
 ###
 #exit()
@@ -195,93 +215,45 @@ model.add(Embedding(top_words, embedding_vecor_length, input_length=max_review_l
 model.add(Dropout(0.2))
 model.add(LSTM(100))
 model.add(Dropout(0.2))
-model.add(Dense(1, activation='sigmoid'))
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.add(Dense(y_train_onehot.shape[1], activation='sigmoid')) #tanh sigmoid
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy']) #categorical_crossentropy  binary_crossentropy
 print(model.summary())
-model.fit(X_train, y_train, nb_epoch=10, batch_size=64)
+history = model.fit(X_train, y_train_onehot, nb_epoch=num_epoch, batch_size=64) 
 # Final evaluation of the model
-train_scores = model.evaluate(X_train, y_train, verbose=0)
-test_scores = model.evaluate(X_test, y_test, verbose=0)
-print("Accuracy: %.2f%%" % (train_scores[1]*100))
-print("Accuracy: %.2f%%" % (test_scores[1]*100))
-ACC = print(round(test_scores[1]*100, 2))
+train_scores = model.evaluate(X_train, y_train_onehot, verbose=0)
+result = model.predict(X_train)
+print(result)
+
+
+print(str('len(result):{}').format(len(result)))
+test_scores = model.evaluate(X_test, y_test_onehot, verbose=0)
+print("Train Accuracy: %.2f%%" % (train_scores[1]*100))
+#print("Test Accuracy: %.2f%%" % (test_scores[1]*100))
+#ACC = print(round(test_scores[1]*100, 2))
+
 with open(outputfilename,'w') as fout:
-    fout.write(str('train Accuracy:{}').format( train_scores[1]*100 ))
+    fout.write(str('train Accuracy:{}\n').format( train_scores[1]*100 ))
     fout.write(str('test Accuracy:{}').format( test_scores[1]*100 ))
     fout.close()
 #with open(outputfilename, "w") as text_file:
    # text_file.write("Accuracy: %.2f%%", % ACC)
 
-"""
-temp_train = []
-temp_pad_train = []
-texts = []
-texts.append('I am so handsome')
-texts.append('I am a pig')
-sec_texts = []
-sec_texts.append('you are I am')
-print(str('texts[]:{}').format(texts))
-print(str('sec_texts[]:{}').format(sec_texts))
-tokenizer = Tokenizer(nb_words=MAX_NB_WORDS)
-tokenizer.fit_on_texts(texts)
-tokenizer.fit_on_texts(sec_texts)
-sequences = tokenizer.texts_to_sequences(texts)
-sec_sequences = tokenizer.texts_to_sequences(sec_texts)
-print('first sequences')
-print(sequences)
-print('sec_sequences')
-print(sec_sequences)
-temp_train = sequences + sec_sequences
-sequences = sequence.pad_sequences(sequences, maxlen=max_review_length)
-sec_sequences = sequence.pad_sequences(sec_sequences, maxlen=max_review_length)
-print('after padding first sequences')
-print(sequences)
-print('after padding sec_sequences')
-print(sec_sequences)
-word_index = tokenizer.word_index
-print('sec word_index')
-print(word_index)
-temp_pad_train = sequences + sec_sequences
-print('temp_train')
-print(temp_train)
-print('temp_pad_train')
-print(temp_pad_train)
-"""
+# list all data in history
+print(history.history.keys())
+# summarize history for accuracy
+plt.plot(history.history['acc'])
+ #plt.plot(history.history['val_acc'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train'], loc='upper left') #plt.legend(['train', 'test'], loc='upper left')
+plt.show()
 
-
-
-
-"""
-# fix random seed for reproducibility
-numpy.random.seed(7)
-# load the dataset but only keep the top n words, zero the rest
-#keras_path = './keras.json'
-top_words = 5000
-(X_data, y_data), (X_test, y_test) = imdb.load_data(nb_words=top_words)
-
-#word_index = imdb.get_word_index(path=keras_path)
-#test = word_index["good"]
-
-# truncate and pad input sequences
-max_review_length = 500
-X_data = sequence.pad_sequences(X_data, maxlen=max_review_length)
-X_test = sequence.pad_sequences(X_test, maxlen=max_review_length)
-
-
-#print('X_data[0] pad_sequences')
-#print(X_data[0])
-
-
-# create the model
-embedding_vecor_length = 32
-model = Sequential()
-model.add(Embedding(top_words, embedding_vecor_length, input_length=max_review_length))
-model.add(LSTM(100))
-model.add(Dense(1, activation='sigmoid'))
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-print(model.summary())
-model.fit(X_data, y_data, nb_epoch=3, batch_size=64)
-# Final evaluation of the model
-test_scores = model.evaluate(X_test, y_test, verbose=0)
-print("Accuracy: %.2f%%" % (test_scores[1]*100))
-"""
+# summarize history for loss
+plt.plot(history.history['loss'])
+#plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train'], loc='upper left')#plt.legend(['train', 'test'], loc='upper left')
+plt.show()
