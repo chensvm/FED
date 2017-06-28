@@ -6,6 +6,9 @@ import copy
 from collections import Counter
 from datetime import date, timedelta,datetime
 import os.path
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 from keras.datasets import imdb
 from keras.models import Sequential
 from keras.layers import Dense
@@ -19,7 +22,6 @@ from keras.preprocessing import sequence
 from keras.utils.np_utils import to_categorical
 from keras.utils import np_utils
 from sklearn.preprocessing import LabelEncoder
-import matplotlib.pyplot as plt
 import pickle
 import json
 print(round(12.5656, 1))
@@ -38,7 +40,7 @@ top_words = 5000 # 5000 20000
 max_review_length = 500 # 500
 
 #number of epoch
-num_epoch = 15
+num_epoch = 20
 
 #article_path = '/tmp2/finance/nytimes/'# for hp machine
 article_train_path = '/tmp2/finance2/nytimes/training_data/' # for hp, cuda3 machine 2005~2008
@@ -60,7 +62,7 @@ rates_train_file = rates_path + 'fed_date_rate_training.csv'
 rates_test_file = rates_path + 'fed_date_rate_testing.csv'
 #outputfilename = 'training_predictions_train_2008_test_2008_wi=88584_tw=5000_mrl=500_nb_epoch=10_Dropout=0.2.txt'
 #outputfilename = 'testing_predictions_train_2005_2008_test_2000_2001_wi=88584_tw=5000_mrl=500_nb_epoch=10_Dropout=0.2.txt'
-outputfilename = 'testing_predictions_train_2005_2008_test_1998_2004_wi=88584_tw=5000_mrl=500_nb_epoch=15_Dropout=0.2.txt'
+outputfilename = 'testing_predictions_train_2005_2008_test_1998_2004_wi=88584_tw=5000_mrl=500_nb_epoch=20_Dropout=0.2.txt'
 #outputfilename = 'testing_predictions_train_2005_test_2004_wi=88584_tw=5000_mrl=500_nb_epoch=3_Dropout=0.2.txt'
 # fix random seed for reproducibility
 np.random.seed(7)
@@ -218,42 +220,69 @@ model.add(Dropout(0.2))
 model.add(Dense(y_train_onehot.shape[1], activation='sigmoid')) #tanh sigmoid
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy']) #categorical_crossentropy  binary_crossentropy
 print(model.summary())
-history = model.fit(X_train, y_train_onehot, nb_epoch=num_epoch, batch_size=64) 
+history = model.fit(X_train, y_train_onehot, validation_data=(X_test, y_test_onehot) ,nb_epoch=num_epoch, batch_size=64) 
 # Final evaluation of the model
 train_scores = model.evaluate(X_train, y_train_onehot, verbose=0)
-result = model.predict(X_train)
-print(result)
 
 
-print(str('len(result):{}').format(len(result)))
+#print(str('len(result):{}').format(len(result)))
 test_scores = model.evaluate(X_test, y_test_onehot, verbose=0)
 print("Train Accuracy: %.2f%%" % (train_scores[1]*100))
-#print("Test Accuracy: %.2f%%" % (test_scores[1]*100))
+print("Test Accuracy: %.2f%%" % (test_scores[1]*100))
 #ACC = print(round(test_scores[1]*100, 2))
+
+result = model.predict(X_test)
+print(result)
+
+result_value = []
+for round in result:
+    temp_large = max(list(round))
+    idx = list(round).index(temp_large)
+    value = encoder.classes_[idx]
+    result_value.append(value)
+print(str('len(y_test):{}').format(len(y_test)))
+print(str('len(result_value):{}').format(len(result_value)))
+
+count = 0.0
+for i in range(len(y_test)):
+    if(y_test[i] == result_value[i]):
+        count = count + 1
+ratio = count/len(y_test)
+
+with open('test result.txt','w') as fout:
+    fout.write(str('y_test     '))
+    fout.write(str('result_value \n'))
+    for i in range(len(y_test)):
+        fout.write(str('{}        ').format( y_test[i]))
+        fout.write(str('{}\n').format( result_value[i]))
+    fout.close()
 
 with open(outputfilename,'w') as fout:
     fout.write(str('train Accuracy:{}\n').format( train_scores[1]*100 ))
-    fout.write(str('test Accuracy:{}').format( test_scores[1]*100 ))
+    fout.write(str('test Accuracy:{}\n').format( test_scores[1]*100 ))
+    fout.write(str('test ratio:{}').format( ratio*100 ))
     fout.close()
 #with open(outputfilename, "w") as text_file:
    # text_file.write("Accuracy: %.2f%%", % ACC)
 
 # list all data in history
 print(history.history.keys())
+
 # summarize history for accuracy
 plt.plot(history.history['acc'])
- #plt.plot(history.history['val_acc'])
+plt.plot(history.history['val_acc'])
 plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
-plt.legend(['train'], loc='upper left') #plt.legend(['train', 'test'], loc='upper left')
+plt.legend(['train', 'test'], loc='upper left') #plt.legend(['train', 'test'], loc='upper left')
 plt.show()
-
+plt.savefig('acc.png') ;
 # summarize history for loss
 plt.plot(history.history['loss'])
-#plt.plot(history.history['val_loss'])
+plt.plot(history.history['val_loss'])
 plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
-plt.legend(['train'], loc='upper left')#plt.legend(['train', 'test'], loc='upper left')
+plt.legend(['train', 'test'], loc='upper left')#plt.legend(['train', 'test'], loc='upper left')
 plt.show()
+plt.savefig('loss.png') ;
