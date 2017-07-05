@@ -25,8 +25,14 @@ import pickle
 #article_test_path = '/tmp2/finance2/nytimes/testing1998_2004/'# 1998~2004
 #article_test_path = '/tmp2/finance2/nytimes/temp_2004/'# 2004
 #article_all_path = '/tmp2/finance2/nytimes/1998_2007/'#1998~2007
-article_all_path = '/tmp2/finance2/nytimes/1998_2008/'#1998~2008
-token_file = 'token1998_2008_index.pkl'#1998~2008
+#article_all_path = '/tmp2/finance2/nytimes/1998_2008/'#1998~2008
+article_all_path = '/tmp2/finance2/nytimes/2000_2001/'#2001
+#article_all_path = '/tmp2/finance2/nytimes/2001/'#2001
+#article_all_path = '/tmp2/finance2/nytimes/temp_2008/'#temp_2008
+#token_file = 'token1998_2008_index.pkl'#1998~2008
+token_path = './token_index/'
+#token_file = token_path + 'token1998_2008_index.pkl'#1998~2008
+token_file = token_path + 'token2000_2001_index.pkl'#2008
 rates_path = '../fed_rates/'
 rates_train_file = rates_path + 'fed_date_rate_training.csv'
 rates_test_file = rates_path + 'fed_date_rate_testing.csv'
@@ -129,11 +135,12 @@ def load_data(article_path, rates_file, tokenizer):
         #date_of_meeting_list.append(date_of_meeting)
         #data_for_date[date_of_meeting] = []
         #rate_for_date[date_of_meeting] = ser[2]
+        print(ser)
         for f in article_file[ind]:
             if os.path.isfile(article_path+f):
                 day = np.load(article_path+f)
                 if(len(day) == 0):
-                    continue
+                    continue   
                 tokenizer.fit_on_texts(day)
                 #counttt = 0
                 #sequences = tokenizer.texts_to_sequences(day)

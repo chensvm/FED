@@ -1,0 +1,3 @@
+train Accuracy:100.0
+test Accuracy:38.351254458923066
+test ratio:38.35125448028674
