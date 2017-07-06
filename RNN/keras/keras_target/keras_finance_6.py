@@ -42,9 +42,9 @@ top_words = 20000 # 5000 20000
 max_review_length = 500 # 500
 
 #number of epoch
-num_epoch = 10
+num_epoch = 20
 #prediction column = target + 3  # target 6, 54
-target = 54
+target = 6
 
 ###parameter
 sample_weight_para = 0.5
@@ -552,15 +552,15 @@ weight_function = np.asarray(weight_function)
 embedding_vecor_length = 32
 model = Sequential()
 model.add(Embedding(top_words, embedding_vecor_length, input_length=max_review_length)) #top_words embedding_words
-#model.add(Dense(64, input_dim=64, kernel_regularizer=regularizers.l2(0.001)))
+model.add(Dense(64, input_dim=64, kernel_regularizer=regularizers.l2(0.001)))
 #model.add(Dense(64, input_dim=64, kernel_regularizer=regularizers.l2(0.001), activity_regularizer=regularizers.l1(0.001)))
 model.add(Dropout(0.2))
 model.add(LSTM(20))
 model.add(Dropout(0.2)) 
 model.add(Dense(y_train.shape[1], activation='sigmoid')) #tanh sigmoid
 #sgd = keras.optimizers.SGD(lr=0.001, momentum=0.9, decay=0.0001, nesterov=True)
-adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0) #optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
-#0.00001
+adam = optimizers.Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0) #optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
+
 model.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy']) #categorical_crossentropy  binary_crossentropy
 print(model.summary())
 history = model.fit(X_train, y_train, validation_data=(X_test, y_test) , sample_weight=weight_function, nb_epoch=num_epoch, batch_size=64) 
@@ -585,7 +585,7 @@ plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left') #plt.legend(['train', 'test'], loc='upper left')
 plt.show()
-plt.savefig('acc_0.5_0.5.png') ;
+plt.savefig('acc_target6.png') ;
 plt.clf()
 # summarize history for loss
 plt.plot(history.history['loss'])
@@ -595,7 +595,7 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')#plt.legend(['train', 'test'], loc='upper left')
 plt.show()
-plt.savefig('loss_0.5_0.5.png') ;
+plt.savefig('loss_target6.png') ;
 
 result = model.predict(X_test)
 print(result)

@@ -1,0 +1,10 @@
+embedding_vecor_length = 32
+model = Sequential()
+model.add(Embedding(top_words, embedding_vecor_length, input_length=max_review_length)) #top_words embedding_words
+model.add(Dense(64, input_dim=64, kernel_regularizer=regularizers.l2(0.001)))
+model.add(Dropout(0.2))
+model.add(LSTM(20))
+model.add(Dropout(0.2)) 
+model.add(Dense(y_train.shape[1], activation='sigmoid')) #tanh sigmoid
+adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0) #optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
+model.compile(loss='categorical_crossentropy', optimizer=adam, metrics=['accuracy']) #categorical_crossentropy  binary_crossentropy
