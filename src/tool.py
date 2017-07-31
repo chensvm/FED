@@ -35,6 +35,13 @@ def readTestingFileList():
             f.write(file + "\n")  # python will convert \n to os.linesep
 
     f.close()
+
+
+def printFile():
+    # data = np.load('../training_articles/20050101.npy')
+    file = open("../fed_rates/fed_date_rate_training.csv", 'r')
+    for row in file:
+        print row
 #
 # data = np.load('../testing_articles/20130101.npy')
 # for line in data:
@@ -112,6 +119,7 @@ def readTestingFileList():
 #             continue
 
 if __name__ == "__main__":
-    readTrainingFileList()
+    # readTrainingFileList()
     # readTestingFileList()
+    printFile()
 
