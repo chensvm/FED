@@ -24,7 +24,7 @@ def loadDataSet():
             if row[1] == 1:
                 print row[0]
 
-                with open('../../../../tmp3/finance/articles/nytimes/' + row[0] + ".npy", 'r') as myfile:
+                with open('../data/filtered/nytimes/' + row[0] + ".npy", 'r') as myfile:
                     data = myfile.readlines()
                     for news in data:
                         regEx = re.compile('\\W*')
