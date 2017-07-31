@@ -1,5 +1,6 @@
 from numpy import *
 import re
+import csv
 import math
 import sys
 import os
@@ -18,25 +19,33 @@ def loadDataSet():
     posNum = 0
     negNum = 0
 
-    with open('../training_articles/positive.txt', 'r') as myfile:
-        data = myfile.readlines()
-        for news in data:
-            regEx = re.compile('\\W*')
-            listOfTokens = regEx.split(news)
-            listOfTokens = [tok.lower() for tok in listOfTokens if len(tok) > 0]
-            filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
-            posNum += 1
-            postingList.append(filtered_words)
+    with open('../fed_rates/fed_date_rate_training', 'r') as c1:
+        for row in c1:
+            if row[1] == 1:
+                print row[0]
 
+                with open('../../../../tmp3/finance/articles/nytimes/' + row[0] + ".npy", 'r') as myfile:
+                    data = myfile.readlines()
+                    for news in data:
+                        regEx = re.compile('\\W*')
+                        listOfTokens = regEx.split(news)
+                        listOfTokens = [tok.lower() for tok in listOfTokens if len(tok) > 0]
+                        filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+                        posNum += 1
+                        postingList.append(filtered_words)
 
-    with open('../training_articles/negative.txt', 'r') as myfile:
-        data = myfile.read().replace('\n', '')
-        regEx = re.compile('\\W*')
-        listOfTokens = regEx.split(data)
-        listOfTokens = [tok.lower() for tok in listOfTokens if len(tok) > 0]
-        filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
-        negNum += 1
-        postingList.append(filtered_words)
+    with open('../fed_rates/fed_date_rate_training', 'r') as c1:
+        for row in c1:
+            if row[1] == -1:
+                print row[0]
+                with open('../../../../tmp3/finance/articles/nytimes/' + row[0] + ".npy", 'r') as myfile:
+                    data = myfile.read().replace('\n', '')
+                    regEx = re.compile('\\W*')
+                    listOfTokens = regEx.split(data)
+                    listOfTokens = [tok.lower() for tok in listOfTokens if len(tok) > 0]
+                    filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+                    negNum += 1
+                    postingList.append(filtered_words)
 
     print posNum
     print negNum
