@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="26f455b3-d569-4a81-979e-37b1ed085f49" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/2016FOMC.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reference/FinalProject-2012Spring.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reference/Performance Results.rtf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reference/Project Outline.rtf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reference/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reference/article.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reference/data.p" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reference/holderexact.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reference/model.p" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reference/nbac.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/reference/nbac_ensemble.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/randomForest.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/bayes.py" afterPath="$PROJECT_DIR$/bayes/bayes.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/stopwords.txt" afterPath="$PROJECT_DIR$/bayes/stopwords.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/tool.py" afterPath="$PROJECT_DIR$/bayes/tool.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -30,7 +15,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="bayes.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="bayes.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bayes/bayes.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-5105">
@@ -38,6 +23,16 @@
               <folding>
                 <element signature="e#24#42#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="40">
+              <caret line="2" column="5" lean-forward="true" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -78,10 +73,10 @@
         <option value="$PROJECT_DIR$/src/tool.py" />
         <option value="$PROJECT_DIR$/training_articles/file.txt" />
         <option value="$PROJECT_DIR$/training_articles/positive.txt" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/bayes.py" />
         <option value="$PROJECT_DIR$/bayes/result.csv" />
         <option value="$PROJECT_DIR$/bayes/bayes.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -614,13 +609,6 @@
     <entry file="file://$PROJECT_DIR$/training_articles/negative.txt" />
     <entry file="file://$PROJECT_DIR$/training_articles/positive.txt" />
     <entry file="file://$PROJECT_DIR$/training_articles/neutral.txt" />
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/filtered_articles/nytimes/1997/19970101.npy">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -733,6 +721,14 @@
           <folding>
             <element signature="e#24#42#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" column="5" lean-forward="true" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
