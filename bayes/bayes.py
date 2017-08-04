@@ -35,7 +35,7 @@ def loadDataSet():
                 for single_date in daterange(start_date, end_date):
 
 
-                    with open('../data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y-%m-%d")) + ".npy", 'r') as myfile:
+                    with open('../data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
                         data = np.load(myfile)
                         if data.size == 0:
                             pass
@@ -63,7 +63,7 @@ def loadDataSet():
                 for single_date in daterange(start_date, end_date):
 
                     with open('../data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
-                            single_date.strftime("%Y-%m-%d")) + ".npy", 'r') as myfile:
+                            single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
                         data = np.load(myfile)
 
@@ -93,7 +93,7 @@ def loadDataSet():
                 for single_date in daterange(start_date, end_date):
 
                     with open('../data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
-                            single_date.strftime("%Y-%m-%d")) + ".npy", 'r') as myfile:
+                            single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
                         data = np.load(myfile)
 
