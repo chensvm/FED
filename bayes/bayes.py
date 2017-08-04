@@ -5,6 +5,7 @@ import re
 import csv
 import math
 from nltk.corpus import stopwords
+from datetime import timedelta, date
 import pandas as pd
 
 
@@ -20,79 +21,103 @@ def loadDataSet():
     with open('../fed_rates/fed_date_rate_training.csv', 'r') as c1:
         reader = csv.reader(c1)
         next(reader, None)  # skip the headers
+        prevRow = "2004-11-01"
         for row in reader:
 
             if row[1] == "1":
 
-                year, month, day = str(row[0]).split("-")
+                cur_year, cur_month, cur_day = str(row[0]).split("-")
+                pre_year, pre_month, pre_day = prevRow.split("-")
+
+                start_date = date(int(pre_year), int(pre_month), int(pre_day))
+                end_date = date(int(cur_year), int(cur_month), int(cur_day))
+
+                for single_date in daterange(start_date, end_date):
 
 
-                with open('../data/filtered_articles/nytimes/' +year+"/"+ year+month+day + ".npy", 'r') as myfile:
-                    data = np.load(myfile)
-                    if data.size == 0:
-                        pass
+                    with open('../data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y-%m-%d")) + ".npy", 'r') as myfile:
+                        data = np.load(myfile)
+                        if data.size == 0:
+                            pass
 
-                    else:
-                        for news in data:
-                            regEx = re.compile('\\W*')
-                            listOfTokens = regEx.split(news)
-                            listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                            filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+                        else:
+                            for news in data:
+                                regEx = re.compile('\\W*')
+                                listOfTokens = regEx.split(news)
+                                listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                                filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
 
-                            posNum += 1
-                            #準備posting list
-                            postingList.append(filtered_words)
-                            # 同時建立一個分類向量搭配
-                            classVec.append(1)
+                                posNum += 1
+                                #準備posting list
+                                postingList.append(filtered_words)
+                                # 同時建立一個分類向量搭配
+                                classVec.append(1)
 
             elif row[1] == "-1":
-                year, month, day = str(row[0]).split("-")
+                cur_year, cur_month, cur_day = str(row[0]).split("-")
+                pre_year, pre_month, pre_day = prevRow.split("-")
 
+                start_date = date(int(pre_year), int(pre_month), int(pre_day))
+                end_date = date(int(cur_year), int(cur_month), int(cur_day))
 
-                with open('../data/filtered_articles/nytimes/' + year + "/" + year+month+day + ".npy", 'r') as myfile:
-                    data = np.load(myfile)
+                for single_date in daterange(start_date, end_date):
 
-                    if data.size == 0:
-                        pass
+                    with open('../data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
+                            single_date.strftime("%Y-%m-%d")) + ".npy", 'r') as myfile:
 
-                    else:
+                        data = np.load(myfile)
 
-                        for news in data:
+                        if data.size == 0:
+                            pass
 
-                            regEx = re.compile('\\W*')
-                            listOfTokens = regEx.split(news)
-                            listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                            filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+                        else:
 
-                            negNum += 1
-                            postingList.append(filtered_words)
-                            classVec.append(-1)
+                            for news in data:
+
+                                regEx = re.compile('\\W*')
+                                listOfTokens = regEx.split(news)
+                                listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                                filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+
+                                negNum += 1
+                                postingList.append(filtered_words)
+                                classVec.append(-1)
 
             elif row[1] == "0":
-                year, month, day = str(row[0]).split("-")
+                cur_year, cur_month, cur_day = str(row[0]).split("-")
+                pre_year, pre_month, pre_day = prevRow.split("-")
 
-                with open('../data/filtered_articles/nytimes/' + year + "/" + year+month+day + ".npy", 'r') as myfile:
-                    data = np.load(myfile)
+                start_date = date(int(pre_year), int(pre_month), int(pre_day))
+                end_date = date(int(cur_year), int(cur_month), int(cur_day))
 
-                    if data.size == 0:
-                        pass
+                for single_date in daterange(start_date, end_date):
 
-                    else:
+                    with open('../data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
+                            single_date.strftime("%Y-%m-%d")) + ".npy", 'r') as myfile:
 
-                        for news in data:
+                        data = np.load(myfile)
 
-                            regEx = re.compile('\\W*')
-                            listOfTokens = regEx.split(news)
-                            listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                            filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+                        if data.size == 0:
+                            pass
 
-                            neutralNum += 1
-                            postingList.append(filtered_words)
-                            classVec.append(0)
+                        else:
+
+                            for news in data:
+
+                                regEx = re.compile('\\W*')
+                                listOfTokens = regEx.split(news)
+                                listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                                filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+
+                                neutralNum += 1
+                                postingList.append(filtered_words)
+                                classVec.append(0)
 
             else:
                 print "pass posting list error: "+ row[0]
                 pass
+
+            prevRow = row[0]
 
     print "finish postingList"
 
@@ -297,7 +322,39 @@ def errorRate():
     print correctRate
 
 
+def test():
+    with open('../fed_rates/fed_date_rate_training.csv', 'r') as c1:
+        reader = csv.reader(c1)
+        next(reader, None)  # skip the headers
+        prevRow = "2004-11-01"
+        for row in reader:
 
+
+            cur_year, cur_month, cur_day = str(row[0]).split("-")
+            pre_year, pre_month, pre_day = prevRow.split("-")
+
+
+            start_date = date(int(pre_year), int(pre_month), int(pre_day))
+            end_date = date(int(cur_year), int(cur_month), int(cur_day))
+            for single_date in daterange(start_date, end_date):
+                print single_date.strftime("%Y-%m-%d")
+
+            # with open('../data/filtered_articles/nytimes/' +year+"/"+ year+month+day + ".npy", 'r') as myfile:
+            #     print year + "-" + month + "-" + day
+
+
+            prevRow = row[0]
+
+
+            # with open('../data/filtered_articles/nytimes/' +year+"/"+ year+month+day + ".npy", 'r') as myfile:
+            #     data = np.load(myfile)
+            #
+            #     print year+"-" + month +"-" + day
+
+
+def daterange(start_date, end_date):
+    for n in range(int((end_date - start_date).days)):
+        yield start_date + timedelta(n)
 
 
 if __name__ == '__main__':
