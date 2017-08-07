@@ -36,6 +36,8 @@ def loadDataSet():
 
 
                     with open('../data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
+
+                        print str(single_date.strftime("%Y-%m-%d"))
                         data = np.load(myfile)
                         if data.size == 0:
                             pass
@@ -53,6 +55,8 @@ def loadDataSet():
                                 # 同時建立一個分類向量搭配
                                 classVec.append(1)
 
+                    myfile.close()
+
             elif row[1] == "-1":
                 cur_year, cur_month, cur_day = str(row[0]).split("-")
                 pre_year, pre_month, pre_day = prevRow.split("-")
@@ -64,6 +68,7 @@ def loadDataSet():
 
                     with open('../data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
                             single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
+                        print str(single_date.strftime("%Y-%m-%d"))
 
                         data = np.load(myfile)
 
@@ -83,6 +88,8 @@ def loadDataSet():
                                 postingList.append(filtered_words)
                                 classVec.append(-1)
 
+                    myfile.close()
+
             elif row[1] == "0":
                 cur_year, cur_month, cur_day = str(row[0]).split("-")
                 pre_year, pre_month, pre_day = prevRow.split("-")
@@ -94,6 +101,8 @@ def loadDataSet():
 
                     with open('../data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
                             single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
+
+                        print str(single_date.strftime("%Y-%m-%d"))
 
                         data = np.load(myfile)
 
@@ -112,6 +121,8 @@ def loadDataSet():
                                 neutralNum += 1
                                 postingList.append(filtered_words)
                                 classVec.append(0)
+
+                    myfile.close()
 
             else:
                 print "pass posting list error: "+ row[0]
@@ -249,6 +260,7 @@ def bagOfWords2VecMN(vocabList, inputSet):
     return returnVec
 
 def testingNB():
+
     print "begin processing of testing data"
     listOPosts, listClasses = loadDataSet()
     myVocabList = createVocabList(listOPosts)
@@ -260,34 +272,51 @@ def testingNB():
     p0V, p1V, pNeV, pPosi, pNeg = trainNB0(np.array(trainMat), np.array(listClasses))
     # listClasses is classVec
     testEntry =[]
-    with open('../fed_rates/fed_date_rate_testing.csv', 'r') as  myfile:
 
-        reader = csv.reader(myfile)
+    ff = open('result.csv', 'w')
+    ff.write("date,rate\n")
+
+
+    with open('../fed_rates/fed_date_rate_testing.csv', 'r') as c1:
+        reader = csv.reader(c1)
         next(reader, None)  # skip the headers
-
-        ff = open('result.csv', 'w')
-        ff.write("date,rate\n")
+        prevRow = "1998-01-01"
 
         for row in reader:
 
-            year, month, day = str(row[0]).split("-")
+            cur_year, cur_month, cur_day = str(row[0]).split("-")
+            pre_year, pre_month, pre_day = prevRow.split("-")
 
-            with open('../data/filtered_articles/nytimes/' + year + "/" + year + month + day + ".npy", 'r') as myfile:
+            start_date = date(int(pre_year), int(pre_month), int(pre_day))
+            end_date = date(int(cur_year), int(cur_month), int(cur_day))
 
-                data = np.load(myfile)
+            for single_date in daterange(start_date, end_date):
 
-                for news in data:
-                    regEx = re.compile('\\W*')
-                    listOfTokens = regEx.split(news)
-                    listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                    filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
-                    testEntry.append(filtered_words)
 
-                thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))
+                with open('../data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
-                date = year + "-" + month + "-" + day
+                    print str(single_date.strftime("%Y-%m-%d"))
 
-                ff.write(date+ ','+ str(classifyNB(thisDoc, p0V, p1V, pNeV, pPosi, pNeg)) + "\n")
+                    data = np.load(myfile)
+
+                    if data.size == 0:
+                        pass
+
+                    else:
+                        for news in data:
+                            regEx = re.compile('\\W*')
+                            listOfTokens = regEx.split(news)
+                            listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                            filtered_words = [word for word in lisstOfTokens if
+                                              word not in stopwords.words('english')]
+                            testEntry.append(filtered_words)
+
+            thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))
+
+            ff.write(cur_year +'-' + cur_month +'-' + cur_day + ',' + str(classifyNB(thisDoc, p0V, p1V, pNeV, pPosi, pNeg)) + "\n")
+
+
+
 
 def errorRate():
     with open('../fed_rates/fed_date_rate_testing.csv', 'r') as testingData:
