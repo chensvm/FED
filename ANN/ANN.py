@@ -1,10 +1,9 @@
+#-*- coding: utf-8 -*-
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
-import os
 import json
 import datetime
 import numpy as np
-import time
 import re
 from datetime import timedelta, date
 import csv
@@ -13,12 +12,18 @@ from nltk.corpus import stopwords
 stemmer = LancasterStemmer()
 
 
+def daterange(start_date, end_date):
+    for n in range(int((end_date - start_date).days)):
+        yield start_date + timedelta(n)
+
 def loadDataSet():
 
     print "start loading training dataset"
     postingList = []
-    classVec = []
+    words = []
     documents = []
+    classVec = []
+
     posNum = 0
     negNum = 0
     neutralNum = 0
@@ -40,7 +45,7 @@ def loadDataSet():
                 for single_date in daterange(start_date, end_date):
 
 
-                    with open('../data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
+                    with open('../finance_data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
                         print str(single_date.strftime("%Y-%m-%d"))
                         data = np.load(myfile)
@@ -57,9 +62,12 @@ def loadDataSet():
                                 posNum += 1
                                 #準備posting list
                                 postingList.append(filtered_words)
+                                words.extend(filtered_words)
                                 # 同時建立一個分類向量搭配
                                 classVec.append(1)
-                                documents.append(filtered_words, 1)
+                                documents.append((filtered_words, 1))
+
+
 
                     myfile.close()
 
@@ -72,7 +80,7 @@ def loadDataSet():
 
                 for single_date in daterange(start_date, end_date):
 
-                    with open('../data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
+                    with open('../finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
                             single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
                         print str(single_date.strftime("%Y-%m-%d"))
 
@@ -93,7 +101,9 @@ def loadDataSet():
                                 negNum += 1
                                 postingList.append(filtered_words)
                                 classVec.append(-1)
-                                documents.append(filtered_words, -1)
+
+                                words.extend(filtered_words)
+                                documents.append((filtered_words, -1))
 
                     myfile.close()
 
@@ -106,7 +116,7 @@ def loadDataSet():
 
                 for single_date in daterange(start_date, end_date):
 
-                    with open('../data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
+                    with open('../finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
                             single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
                         print str(single_date.strftime("%Y-%m-%d"))
@@ -128,8 +138,10 @@ def loadDataSet():
                                 neutralNum += 1
                                 postingList.append(filtered_words)
                                 classVec.append(0)
+                                words.extend(filtered_words)
+                                documents.append((filtered_words, 0))
 
-                        documents.append((postingList, pattern['class']))
+
 
                     myfile.close()
 
@@ -141,11 +153,10 @@ def loadDataSet():
 
     print "finish postingList"
 
-    return postingList, classVec
+    return postingList, classVec, words, documents
+
 # 3 classes of training data
 #training_data = []
-
-
 
 # training_data.append({"class":"greeting", "sentence":"how are you?"})
 
@@ -154,9 +165,8 @@ def loadDataSet():
 
 # We can now organize our data structures for documents, classes and words.
 
-words = []
-classes = []
-documents = []
+classes = [1, 0, -1]
+
 # ignore_words = ['?']
 # loop through each sentence in our training data
 # for pattern in training_data:
@@ -177,7 +187,8 @@ documents = []
 # # remove duplicates
 # classes = list(set(classes))
 
-classes, words = loadDataSet()
+postingList, classVec, words, documents = loadDataSet()
+words = list(set(words))
 
 print (len(documents), "documents")
 print (len(classes), "classes", classes)
@@ -212,6 +223,7 @@ for doc in documents:
 # sample training/output
 i = 0
 w = documents[i][0]
+print "finish bag of words"
 print ([stemmer.stem(word.lower()) for word in w])
 print (training[i])
 print (output[i])
@@ -244,7 +256,7 @@ def clean_up_sentence(sentence):
     sentence_words = [stemmer.stem(word.lower()) for word in sentence_words]
     return sentence_words
 
-
+# bag-of-words
 # return bag of words array: 0 or 1 for each word in the bag that exists in the sentence
 def bow(sentence, words, show_details=False):
     # tokenize the pattern
@@ -257,11 +269,12 @@ def bow(sentence, words, show_details=False):
                 bag[i] = 1
                 if show_details:
                     print ("found in bag: %s" % w)
-
+    print "finish bag of words"
     return (np.array(bag))
 
-
+# dot-product calculation in our previously defined think() function
 def think(sentence, show_details=False):
+    print "begining of think function"
     x = bow(sentence.lower(), words, show_details)
     if show_details:
         print ("sentence:", sentence, "\n bow:", x)
@@ -282,6 +295,8 @@ alphas = [0.001, 0.01, 0.1, 1, 10, 100, 1000]
 
 def train(X, y, hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout_percent=0.5):
     # self, training_set_inputs, training_set_outputs, number_of_training_iterations
+
+    print "begin to train"
 
     print ("Training with %s neurons, alpha:%s, dropout:%s %s" % (
     hidden_neurons, str(alpha), dropout, dropout_percent if dropout else ''))
@@ -383,6 +398,7 @@ def train(X, y, hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout
     print ("saved synapses to:", synapse_file)
 
 
-def daterange(start_date, end_date):
-    for n in range(int((end_date - start_date).days)):
-        yield start_date + timedelta(n)
+
+
+
+# The synapse.json file contains all of our synaptic weights, this is our model.
