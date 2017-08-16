@@ -35,7 +35,7 @@ def loadDataSet():
                 for single_date in daterange(start_date, end_date):
 
 
-                    with open('../finance_data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
+                    with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
                         print str(single_date.strftime("%Y-%m-%d"))
                         data = np.load(myfile)
@@ -66,7 +66,7 @@ def loadDataSet():
 
                 for single_date in daterange(start_date, end_date):
 
-                    with open('../finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
+                    with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
                             single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
                         print str(single_date.strftime("%Y-%m-%d"))
 
@@ -99,7 +99,7 @@ def loadDataSet():
 
                 for single_date in daterange(start_date, end_date):
 
-                    with open('../finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
+                    with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
                             single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
                         print str(single_date.strftime("%Y-%m-%d"))
@@ -131,6 +131,15 @@ def loadDataSet():
             prevRow = row[0]
 
     print "finish postingList"
+    # f = open ("postinglist.txt", 'w')
+    # f.write(postingList)
+    # f.close()
+    #
+    # g = open ("classVec.txt", 'w')
+    # g.write(classVec)
+    # g.close()
+
+
 
     return postingList, classVec
 
@@ -293,7 +302,7 @@ def testingNB():
             for single_date in daterange(start_date, end_date):
 
 
-                with open('../data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
+                with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
                     print str(single_date.strftime("%Y-%m-%d"))
 
@@ -307,13 +316,13 @@ def testingNB():
                             regEx = re.compile('\\W*')
                             listOfTokens = regEx.split(news)
                             listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                            filtered_words = [word for word in lisstOfTokens if
+                            filtered_words = [word for word in listOfTokens if
                                               word not in stopwords.words('english')]
                             testEntry.append(filtered_words)
 
-            thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))
+                thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))
 
-            ff.write(cur_year +'-' + cur_month +'-' + cur_day + ',' + str(classifyNB(thisDoc, p0V, p1V, pNeV, pPosi, pNeg)) + "\n")
+                ff.write(cur_year +'-' + cur_month +'-' + cur_day + ',' + str(classifyNB(thisDoc, p0V, p1V, pNeV, pPosi, pNeg)) + "\n")
 
 
 

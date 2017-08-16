@@ -45,7 +45,7 @@ def loadDataSet():
                 for single_date in daterange(start_date, end_date):
 
 
-                    with open('../finance_data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
+                    with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
                         print str(single_date.strftime("%Y-%m-%d"))
                         data = np.load(myfile)
@@ -80,7 +80,7 @@ def loadDataSet():
 
                 for single_date in daterange(start_date, end_date):
 
-                    with open('../finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
+                    with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
                             single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
                         print str(single_date.strftime("%Y-%m-%d"))
 
@@ -116,7 +116,7 @@ def loadDataSet():
 
                 for single_date in daterange(start_date, end_date):
 
-                    with open('../finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
+                    with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
                             single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
                         print str(single_date.strftime("%Y-%m-%d"))
@@ -165,68 +165,80 @@ def loadDataSet():
 
 # We can now organize our data structures for documents, classes and words.
 
-classes = [1, 0, -1]
 
-# ignore_words = ['?']
-# loop through each sentence in our training data
-# for pattern in training_data:
-#     # tokenize each word in the sentence
-#     w = nltk.word_tokenize(pattern['sentence'])
-#     # add to our words list
-#     words.extend(w)
-#     # add to documents in our corpus
-#     documents.append((w, pattern['class']))
-#     # add to our classes list
-#     if pattern['class'] not in classes:
-#         classes.append(pattern['class'])
+def VecPrepare():
 
-# stem and lower each word and remove duplicates
-# words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
-# words = list(set(words))
-#
-# # remove duplicates
-# classes = list(set(classes))
+    classes = [1, 0, -1]
 
-postingList, classVec, words, documents = loadDataSet()
-words = list(set(words))
 
-print (len(documents), "documents")
-print (len(classes), "classes", classes)
-print (len(words), "unique stemmed words", words)
+    # ignore_words = ['?']
+    # loop through each sentence in our training data
+    # for pattern in training_data:
+    #     # tokenize each word in the sentence
+    #     w = nltk.word_tokenize(pattern['sentence'])
+    #     # add to our words list
+    #     words.extend(w)
+    #     # add to documents in our corpus
+    #     documents.append((w, pattern['class']))
+    #     # add to our classes list
+    #     if pattern['class'] not in classes:
+    #         classes.append(pattern['class'])
 
-# create our training data
-# Our training data is transformed into “bag of words”
+    # stem and lower each word and remove duplicates
+    # words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
+    # words = list(set(words))
+    #
+    # # remove duplicates
+    # classes = list(set(classes))
 
-training = []
-output = []
-# create an empty array for our output
-output_empty = [0] * len(classes)
+    postingList, classVec, words, documents = loadDataSet()
+    words = list(set(words))
 
-# training set, bag of words for each sentence
-for doc in documents:
+    print (len(documents), "documents")
+    print (len(classes), "classes", classes)
+    print (len(words), "unique stemmed words", words)
+
+    # create our training data
+    # Our training data is transformed into “bag of words”
+
+    training = []
+    output = []
+    # create an empty array for our output
+    output_empty = [0] * len(classes)
+
+    # training set, bag of words for each sentence
+    # documents : [list of words, class]
+    for doc in documents:
     # initialize our bag of words
-    bag = []
+        bag = []
     # list of tokenized words for the pattern
+    # 只看list of words部分
     pattern_words = doc[0]
     # stem each word
     pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
     # create our bag of words array
     for w in words:
+    # 如果word中的任一個詞有出現過，就append 1
         bag.append(1) if w in pattern_words else bag.append(0)
 
     training.append(bag)
+    print "training: " + str(trainging)
     # output is a '0' for each tag and '1' for current tag
     output_row = list(output_empty)
+    print "output row: " + str(output_row)
     output_row[classes.index(doc[1])] = 1
     output.append(output_row)
 
-# sample training/output
-i = 0
-w = documents[i][0]
-print "finish bag of words"
-print ([stemmer.stem(word.lower()) for word in w])
-print (training[i])
-print (output[i])
+    # sample training/output
+    i = 0
+    w = documents[i][0]
+    print "finish bag of words"
+    # print ([stemmer.stem(word.lower()) for word in w])
+    print (training[i])
+    print (output[i])
+
+
+
 
 
 # compute sigmoid nonlinearity
@@ -397,6 +409,12 @@ def train(X, y, hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout
         json.dump(synapse, outfile, indent=4, sort_keys=True)
     print ("saved synapses to:", synapse_file)
 
+
+if __name__ == '__main__':
+
+
+    VecPrepare()
+    train()
 
 
 
