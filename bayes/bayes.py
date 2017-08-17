@@ -285,7 +285,6 @@ def testingNB():
     ff = open('result.csv', 'w')
     ff.write("date,rate\n")
 
-
     with open('../fed_rates/fed_date_rate_testing.csv', 'r') as c1:
         reader = csv.reader(c1)
         next(reader, None)  # skip the headers
@@ -301,8 +300,9 @@ def testingNB():
 
             for single_date in daterange(start_date, end_date):
 
-
-                with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
+                with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' + str(
+                        single_date.strftime("%Y")) + "/" + str(single_date.strftime("%Y%m%d")) + ".npy",
+                          'r') as myfile:
 
                     print str(single_date.strftime("%Y-%m-%d"))
 
@@ -320,9 +320,14 @@ def testingNB():
                                               word not in stopwords.words('english')]
                             testEntry.append(filtered_words)
 
-                thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))
+            prevRow = row[0]
 
-                ff.write(cur_year +'-' + cur_month +'-' + cur_day + ',' + str(classifyNB(thisDoc, p0V, p1V, pNeV, pPosi, pNeg)) + "\n")
+            thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))
+
+            ff.write(cur_year + '-' + cur_month + '-' + cur_day + ',' + str(
+                classifyNB(thisDoc, p0V, p1V, pNeV, pPosi, pNeg)) + "\n")
+
+            print "######## finish one section ########"
 
 
 
@@ -360,34 +365,6 @@ def errorRate():
     print correctRate
 
 
-def test():
-    with open('../fed_rates/fed_date_rate_training.csv', 'r') as c1:
-        reader = csv.reader(c1)
-        next(reader, None)  # skip the headers
-        prevRow = "2004-11-01"
-        for row in reader:
-
-
-            cur_year, cur_month, cur_day = str(row[0]).split("-")
-            pre_year, pre_month, pre_day = prevRow.split("-")
-
-
-            start_date = date(int(pre_year), int(pre_month), int(pre_day))
-            end_date = date(int(cur_year), int(cur_month), int(cur_day))
-            for single_date in daterange(start_date, end_date):
-                print single_date.strftime("%Y-%m-%d")
-
-            # with open('../data/filtered_articles/nytimes/' +year+"/"+ year+month+day + ".npy", 'r') as myfile:
-            #     print year + "-" + month + "-" + day
-
-
-            prevRow = row[0]
-
-
-            # with open('../data/filtered_articles/nytimes/' +year+"/"+ year+month+day + ".npy", 'r') as myfile:
-            #     data = np.load(myfile)
-            #
-            #     print year+"-" + month +"-" + day
 
 
 def daterange(start_date, end_date):
