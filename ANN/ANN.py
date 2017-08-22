@@ -155,90 +155,54 @@ def loadDataSet():
 
     return postingList, classVec, words, documents
 
-# 3 classes of training data
-#training_data = []
-
-# training_data.append({"class":"greeting", "sentence":"how are you?"})
-
-#print ("%s sentences in training data" % len(training_data))
 
 
-# We can now organize our data structures for documents, classes and words.
+classes = [1, 0, -1]
+
+postingList, classVec, words, documents = loadDataSet()
+words = list(set(words))
+
+print (len(documents), "documents")
+print (len(classes), "classes", classes)
+print (len(words), "unique stemmed words")
+
+# create our training data
+# Our training data is transformed into “bag of words”
+
+training = []
+output = []
+# create an empty array for our output
+output_empty = [0] * len(classes)
+
+# training set, bag of words for each sentence
+# documents : [list of words, class]
+for doc in documents:
+# initialize our bag of words
+    bag = []
+# list of tokenized words for the pattern
+# 只看list of words部分
+pattern_words = doc[0]
+# stem each word
+pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
+# create our bag of words array
+for w in words:
+# 如果word中的任一個詞有出現過，就append 1
+    bag.append(1) if w in pattern_words else bag.append(0)
 
 
-def VecPrepare():
+training.append(bag)
+# output is a '0' for each tag and '1' for current tag
+output_row = list(output_empty)
+output_row[classes.index(doc[1])] = 1
+output.append(output_row)
+print "output row: " + str(output_row)
 
-    classes = [1, 0, -1]
-
-
-    # ignore_words = ['?']
-    # loop through each sentence in our training data
-    # for pattern in training_data:
-    #     # tokenize each word in the sentence
-    #     w = nltk.word_tokenize(pattern['sentence'])
-    #     # add to our words list
-    #     words.extend(w)
-    #     # add to documents in our corpus
-    #     documents.append((w, pattern['class']))
-    #     # add to our classes list
-    #     if pattern['class'] not in classes:
-    #         classes.append(pattern['class'])
-
-    # stem and lower each word and remove duplicates
-    # words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
-    # words = list(set(words))
-    #
-    # # remove duplicates
-    # classes = list(set(classes))
-
-    postingList, classVec, words, documents = loadDataSet()
-    words = list(set(words))
-
-    print (len(documents), "documents")
-    print (len(classes), "classes", classes)
-    print (len(words), "unique stemmed words", words)
-
-    # create our training data
-    # Our training data is transformed into “bag of words”
-
-    training = []
-    output = []
-    # create an empty array for our output
-    output_empty = [0] * len(classes)
-
-    # training set, bag of words for each sentence
-    # documents : [list of words, class]
-    for doc in documents:
-    # initialize our bag of words
-        bag = []
-    # list of tokenized words for the pattern
-    # 只看list of words部分
-    pattern_words = doc[0]
-    # stem each word
-    pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
-    # create our bag of words array
-    for w in words:
-    # 如果word中的任一個詞有出現過，就append 1
-        bag.append(1) if w in pattern_words else bag.append(0)
-
-    training.append(bag)
-    print "training: " + str(trainging)
-    # output is a '0' for each tag and '1' for current tag
-    output_row = list(output_empty)
-    print "output row: " + str(output_row)
-    output_row[classes.index(doc[1])] = 1
-    output.append(output_row)
-
-    # sample training/output
-    i = 0
-    w = documents[i][0]
-    print "finish bag of words"
-    # print ([stemmer.stem(word.lower()) for word in w])
-    print (training[i])
-    print (output[i])
-
-
-
+# sample training/output
+i = 0
+w = documents[i][0]
+print "finish bag of words"
+# print ([stemmer.stem(word.lower()) for word in w])
+print (output[i])
 
 
 # compute sigmoid nonlinearity
@@ -289,7 +253,8 @@ def think(sentence, show_details=False):
     print "begining of think function"
     x = bow(sentence.lower(), words, show_details)
     if show_details:
-        print ("sentence:", sentence, "\n bow:", x)
+
+        print ("bow: ", x)
     # input layer is our bag of words
     l0 = x
     # matrix multiplication of input and hidden layer
@@ -408,15 +373,118 @@ def train(X, y, hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout
     with open(synapse_file, 'w') as outfile:
         json.dump(synapse, outfile, indent=4, sort_keys=True)
     print ("saved synapses to:", synapse_file)
-
-
-if __name__ == '__main__':
-
-
-    VecPrepare()
-    train()
-
-
-
-
 # The synapse.json file contains all of our synaptic weights, this is our model.
+
+
+X = np.array(training)
+y = np.array(output)
+
+# start_time = time.time()
+
+train(X, y, hidden_neurons=20, alpha=0.1, epochs=100000, dropout=False, dropout_percent=0.2)
+
+# elapsed_time = time.time() - start_time
+# print ("processing time:", elapsed_time, "seconds")
+
+# probability threshold
+ERROR_THRESHOLD = 0.2
+# load our calculated synapse values
+synapse_file = 'synapses.json'
+with open(synapse_file) as data_file:
+    synapse = json.load(data_file)
+    synapse_0 = np.asarray(synapse['synapse0'])
+    synapse_1 = np.asarray(synapse['synapse1'])
+
+def classify(sentence, show_details=False):
+    results = think(sentence, show_details)
+
+    results = [[i,r] for i,r in enumerate(results) if r>ERROR_THRESHOLD ]
+    results.sort(key=lambda x: x[1], reverse=True)
+    return_results =[[classes[r[0]],r[1]] for r in results]
+    print ("%s \n classification: %s" % (sentence, return_results))
+    return return_results
+
+
+
+
+print "begin processing of testing data"
+
+ff = open('result.csv', 'w')
+ff.write("date,rate\n")
+
+
+with open('../fed_rates/fed_date_rate_testing.csv', 'r') as c1:
+    reader = csv.reader(c1)
+    next(reader, None)  # skip the headers
+    prevRow = "1998-01-01"
+
+    for row in reader:
+
+        cur_year, cur_month, cur_day = str(row[0]).split("-")
+        pre_year, pre_month, pre_day = prevRow.split("-")
+
+        start_date = date(int(pre_year), int(pre_month), int(pre_day))
+        end_date = date(int(cur_year), int(cur_month), int(cur_day))
+        collection = []
+
+        for single_date in daterange(start_date, end_date):
+
+            with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' + str(
+                    single_date.strftime("%Y")) + "/" + str(single_date.strftime("%Y%m%d")) + ".npy",
+                      'r') as myfile:
+
+                print str(single_date.strftime("%Y-%m-%d"))
+
+                data = np.load(myfile)
+
+                if data.size == 0:
+                    pass
+
+                else:
+                    for news in data:
+                        collection.append(news)
+
+        prevRow = row[0]
+
+        ff.write(cur_year + '-' + cur_month + '-' + cur_day + ',' + str(classify(''.join(collection))) + "\n")
+
+        print "######## finish one section ########"
+
+
+def errorRate():
+    with open('../fed_rates/fed_date_rate_testing.csv', 'r') as testingData:
+        with open('result.csv', 'r') as result:
+            reader_t = csv.reader(testingData)
+            reader_r = csv.reader(result)
+
+
+            next(reader_t, None)  # skip the headers
+            next(reader_r, None)
+
+            correctNum = 0
+
+            testingResult = []
+
+            for row in reader_t:
+                testingResult.append(row[1])
+
+            for row in reader_r:
+
+                if row[1] == testingResult[reader_r.line_num-2]:
+                    correctNum +=1
+
+
+
+
+
+    print "Correct Classification Number: " + str(correctNum)
+    print "Total Number: " + str(len(testingResult))
+    print "correct Rate: "
+    correctRate = float(correctNum)/float(len(testingResult))
+    print correctRate
+
+
+
+
+
+
