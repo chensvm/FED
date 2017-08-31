@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import tensorflow as tf
 import numpy as np
 
@@ -10,6 +12,15 @@ class TextCNN(object):
     def __init__(
       self, sequence_length, num_classes, vocab_size,
       embedding_size, filter_sizes, num_filters, l2_reg_lambda=0.0):
+
+        '''
+        sequence_length – The length of our sentences. Remember that we padded all our sentences to have the same length (59 for our data set).
+        num_classes – Number of classes in the output layer, two in our case (positive and negative).
+        vocab_size – The size of our vocabulary. This is needed to define the size of our embedding layer, which will have shape [vocabulary_size, embedding_size].
+        embedding_size – The dimensionality of our embeddings.
+        filter_sizes – The number of words we want our convolutional filters to cover. We will have num_filters for each size specified here. For example, [3, 4, 5] means that we will have filters that slide over 3, 4 and 5 words respectively, for a total of 3 * num_filters filters.
+        num_filters – The number of filters per filter size (see above)
+        '''
 
         # Placeholders for input, output and dropout
         self.input_x = tf.placeholder(tf.int32, [None, sequence_length], name="input_x")

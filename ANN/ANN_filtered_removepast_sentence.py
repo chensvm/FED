@@ -8,9 +8,11 @@ import re
 from datetime import timedelta, date
 import csv
 from nltk.corpus import stopwords
+import os
+import bigfloat
 
 stemmer = LancasterStemmer()
-
+tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 def daterange(start_date, end_date):
     for n in range(int((end_date - start_date).days)):
@@ -19,7 +21,7 @@ def daterange(start_date, end_date):
 def loadDataSet():
 
     print "start loading training dataset"
-    postingList = []
+
     words = []
     documents = []
     classVec = []
@@ -44,32 +46,38 @@ def loadDataSet():
 
                 for single_date in daterange(start_date, end_date):
 
-
-                    with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' +str(single_date.strftime("%Y"))+"/"+ str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
-
-                        print str(single_date.strftime("%Y-%m-%d"))
-                        data = np.load(myfile)
-                        if data.size == 0:
-                            pass
-
-                        else:
-                            for news in data:
-                                regEx = re.compile('\\W*')
-                                listOfTokens = regEx.split(news)
-                                listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                                filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
-
-                                posNum += 1
-                                #準備posting list
-                                postingList.append(filtered_words)
-                                words.extend(filtered_words)
-                                # 同時建立一個分類向量搭配
-                                classVec.append(1)
-                                documents.append((filtered_words, 1))
+                    if os.path.isfile('../../../../tmp2/finance_data/filtered_articles_remove_past/' + str(
+                            single_date.strftime("%Y%m%d")) + ".npy"):
 
 
+                        with open('../../../../tmp2/finance_data/filtered_articles_remove_past/' + str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
-                    myfile.close()
+
+                            print str(single_date.strftime("%Y-%m-%d")) + " label: 1"
+
+                            data = np.load(myfile)
+                            if data.size == 0:
+                                pass
+
+                            else:
+                                for news in data:
+
+                                    regEx = re.compile('\\W*')
+                                    listOfTokens = regEx.split(news)
+                                    listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                                    filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+
+                                    posNum += 1
+                                    #準備posting list
+
+                                    words.extend(filtered_words)
+                                    # 同時建立一個分類向量搭配
+                                    classVec.append(1)
+                                    documents.append((filtered_words, 1))
+
+
+
+                        myfile.close()
 
             elif row[1] == "-1":
                 cur_year, cur_month, cur_day = str(row[0]).split("-")
@@ -80,32 +88,35 @@ def loadDataSet():
 
                 for single_date in daterange(start_date, end_date):
 
-                    with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
-                            single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
-                        print str(single_date.strftime("%Y-%m-%d"))
+                    if os.path.isfile('../../../../tmp2/finance_data/filtered_articles_remove_past/' + str(
+                            single_date.strftime("%Y%m%d")) + ".npy"):
 
-                        data = np.load(myfile)
+                        with open('../../../../tmp2/finance_data/filtered_articles_remove_past/' + str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
-                        if data.size == 0:
-                            pass
+                            print str(single_date.strftime("%Y-%m-%d"))+ " label: -1"
 
-                        else:
+                            data = np.load(myfile)
 
-                            for news in data:
+                            if data.size == 0:
+                                pass
 
-                                regEx = re.compile('\\W*')
-                                listOfTokens = regEx.split(news)
-                                listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                                filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+                            else:
 
-                                negNum += 1
-                                postingList.append(filtered_words)
-                                classVec.append(-1)
+                                for news in data:
 
-                                words.extend(filtered_words)
-                                documents.append((filtered_words, -1))
+                                    regEx = re.compile('\\W*')
+                                    listOfTokens = regEx.split(news)
+                                    listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                                    filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
 
-                    myfile.close()
+                                    negNum += 1
+
+                                    classVec.append(-1)
+
+                                    words.extend(filtered_words)
+                                    documents.append((filtered_words, -1))
+
+                        myfile.close()
 
             elif row[1] == "0":
                 cur_year, cur_month, cur_day = str(row[0]).split("-")
@@ -116,34 +127,37 @@ def loadDataSet():
 
                 for single_date in daterange(start_date, end_date):
 
-                    with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' + str(single_date.strftime("%Y")) + "/" + str(
-                            single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
+                    if os.path.isfile('../../../../tmp2/finance_data/filtered_articles_remove_past/' + str(
+                            single_date.strftime("%Y%m%d")) + ".npy"):
 
-                        print str(single_date.strftime("%Y-%m-%d"))
+                        with open('../../../../tmp2/finance_data/filtered_articles_remove_past/' + str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
-                        data = np.load(myfile)
+                            print str(single_date.strftime("%Y-%m-%d"))+ " label: 0"
 
-                        if data.size == 0:
-                            pass
+                            data = np.load(myfile)
 
-                        else:
+                            if data.size == 0:
+                                pass
 
-                            for news in data:
+                            else:
 
-                                regEx = re.compile('\\W*')
-                                listOfTokens = regEx.split(news)
-                                listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                                filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+                                for news in data:
 
-                                neutralNum += 1
-                                postingList.append(filtered_words)
-                                classVec.append(0)
-                                words.extend(filtered_words)
-                                documents.append((filtered_words, 0))
+                                    regEx = re.compile('\\W*')
+                                    listOfTokens = regEx.split(news)
+                                    listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                                    filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+
+                                    neutralNum += 1
+
+                                    classVec.append(0)
+
+                                    words.extend(filtered_words)
+                                    documents.append((filtered_words, 0))
 
 
 
-                    myfile.close()
+                        myfile.close()
 
             else:
                 print "pass posting list error: "+ row[0]
@@ -151,15 +165,15 @@ def loadDataSet():
 
             prevRow = row[0]
 
-    print "finish postingList"
+    print "finish loading dataset"
 
-    return postingList, classVec, words, documents
+    return classVec, words, documents
 
 
 
 classes = [1, 0, -1]
 
-postingList, classVec, words, documents = loadDataSet()
+classVec, words, documents = loadDataSet()
 words = list(set(words))
 
 print (len(documents), "documents")
@@ -179,48 +193,54 @@ output_empty = [0] * len(classes)
 for doc in documents:
 # initialize our bag of words
     bag = []
-# list of tokenized words for the pattern
-# 只看list of words部分
-pattern_words = doc[0]
-# stem each word
-pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
-# create our bag of words array
-for w in words:
-# 如果word中的任一個詞有出現過，就append 1
-    bag.append(1) if w in pattern_words else bag.append(0)
+    # list of tokenized words for the pattern
+    # 只看list of words部分
+    pattern_words = doc[0]
+    # stem each word
+    pattern_words = [stemmer.stem(word.lower()) for word in pattern_words]
+    # create our bag of words array
+    for w in words:
+    # 如果word中的任一個詞有出現過，就append 1
+        bag.append(1) if w in pattern_words else bag.append(0)
 
 
-training.append(bag)
-# output is a '0' for each tag and '1' for current tag
-output_row = list(output_empty)
-output_row[classes.index(doc[1])] = 1
-output.append(output_row)
-print "output row: " + str(output_row)
+    training.append(bag)
+    # output is a '0' for each tag and '1' for current tag
+    output_row = list(output_empty)
+    output_row[classes.index(doc[1])] = 1
+    output.append(output_row)
+
+print ("# words", len(words))
+print ("# classes", len(classes))
 
 # sample training/output
 i = 0
 w = documents[i][0]
+
+
 print "finish bag of words"
 # print ([stemmer.stem(word.lower()) for word in w])
-print (output[i])
+# print (training[i])
+# print (output[i])
+
+# [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+# [1, 0, 0]
 
 
 # compute sigmoid nonlinearity
 # The Sigmoid function, which describes an S shaped curve.
 # We pass the weighted sum of the inputs through this function to
 # normalise them between 0 and 1.
-
 def sigmoid(x):
+
     output = 1 / (1 + np.exp(-x))
     return output
-
 
 # convert output of sigmoid function to its derivative
 # The derivative of the Sigmoid function.
 # This is the gradient of the Sigmoid curve.
 # It indicates how confident we are about the existing weight.
 # Sigmoid derivative’ tells us about the slope of the curve on any point
-
 def sigmoid_output_to_derivative(output):
     return output * (1 - output)
 
@@ -230,6 +250,8 @@ def clean_up_sentence(sentence):
     sentence_words = nltk.word_tokenize(sentence)
     # stem each word
     sentence_words = [stemmer.stem(word.lower()) for word in sentence_words]
+    sentence_words = [word for word in sentence_words if word not in stopwords.words('english')]
+
     return sentence_words
 
 # bag-of-words
@@ -251,6 +273,7 @@ def bow(sentence, words, show_details=False):
 # dot-product calculation in our previously defined think() function
 def think(sentence, show_details=False):
     print "begining of think function"
+    # bow() build up bag of words
     x = bow(sentence.lower(), words, show_details)
     if show_details:
 
@@ -270,8 +293,10 @@ alphas = [0.001, 0.01, 0.1, 1, 10, 100, 1000]
 # ANN and Gradient Descent code from https://iamtrask.github.io//2015/07/27/python-network-part2/
 # Adjusting the synaptic weights each time.
 
-def train(X, y, hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout_percent=0.5):
+def train(X, y, hidden_neurons, alpha, epochs, dropout, dropout_percent):
     # self, training_set_inputs, training_set_outputs, number_of_training_iterations
+    # X = np.array(training)
+    # y = np.array(output)
 
     print "begin to train"
 
@@ -368,7 +393,7 @@ def train(X, y, hidden_neurons=10, alpha=1, epochs=50000, dropout=False, dropout
                'words': words,
                'classes': classes
                }
-    synapse_file = "synapses.json"
+    synapse_file = "synapses_filtered_removepast_sentence.json"
 
     with open(synapse_file, 'w') as outfile:
         json.dump(synapse, outfile, indent=4, sort_keys=True)
@@ -381,7 +406,7 @@ y = np.array(output)
 
 # start_time = time.time()
 
-train(X, y, hidden_neurons=20, alpha=0.1, epochs=100000, dropout=False, dropout_percent=0.2)
+train(X, y, hidden_neurons=20, alpha=0.1, epochs=50000, dropout=False, dropout_percent=0.2)
 
 # elapsed_time = time.time() - start_time
 # print ("processing time:", elapsed_time, "seconds")
@@ -389,19 +414,20 @@ train(X, y, hidden_neurons=20, alpha=0.1, epochs=100000, dropout=False, dropout_
 # probability threshold
 ERROR_THRESHOLD = 0.2
 # load our calculated synapse values
-synapse_file = 'synapses.json'
+synapse_file = 'synapses_filtered_removepast_sentence.json'
 with open(synapse_file) as data_file:
     synapse = json.load(data_file)
     synapse_0 = np.asarray(synapse['synapse0'])
     synapse_1 = np.asarray(synapse['synapse1'])
 
 def classify(sentence, show_details=False):
+
     results = think(sentence, show_details)
 
     results = [[i,r] for i,r in enumerate(results) if r>ERROR_THRESHOLD ]
     results.sort(key=lambda x: x[1], reverse=True)
     return_results =[[classes[r[0]],r[1]] for r in results]
-    print ("%s \n classification: %s" % (sentence, return_results))
+    print ("classification: %s" % return_results)
     return return_results
 
 
@@ -409,8 +435,7 @@ def classify(sentence, show_details=False):
 
 print "begin processing of testing data"
 
-ff = open('result.csv', 'w')
-ff.write("date,rate\n")
+ff = open('result_filtered_removepast_sentence.csv', 'w')
 
 
 with open('../fed_rates/fed_date_rate_testing.csv', 'r') as c1:
@@ -429,31 +454,31 @@ with open('../fed_rates/fed_date_rate_testing.csv', 'r') as c1:
 
         for single_date in daterange(start_date, end_date):
 
-            with open('../../../../tmp2/finance_data/filtered_articles/nytimes/' + str(
-                    single_date.strftime("%Y")) + "/" + str(single_date.strftime("%Y%m%d")) + ".npy",
-                      'r') as myfile:
+            if os.path.isfile('../../../../tmp2/finance_data/filtered_articles_remove_past/' + str(single_date.strftime("%Y%m%d")) + ".npy"):
 
-                print str(single_date.strftime("%Y-%m-%d"))
+                with open('../../../../tmp2/finance_data/filtered_articles_remove_past/' + str(single_date.strftime("%Y%m%d")) + ".npy", 'r') as myfile:
 
-                data = np.load(myfile)
+                    print str(single_date.strftime("%Y-%m-%d"))
 
-                if data.size == 0:
-                    pass
+                    data = np.load(myfile)
 
-                else:
-                    for news in data:
-                        collection.append(news)
+                    if data.size == 0:
+                        pass
+
+                    else:
+                        for news in data:
+
+                            ff.write(cur_year + '-' + cur_month + '-' + cur_day + ',' + str(classify(news)) + "\n")
+
 
         prevRow = row[0]
-
-        ff.write(cur_year + '-' + cur_month + '-' + cur_day + ',' + str(classify(''.join(collection))) + "\n")
 
         print "######## finish one section ########"
 
 
 def errorRate():
     with open('../fed_rates/fed_date_rate_testing.csv', 'r') as testingData:
-        with open('result.csv', 'r') as result:
+        with open('result_remove_past_tense.csv', 'r') as result:
             reader_t = csv.reader(testingData)
             reader_r = csv.reader(result)
 

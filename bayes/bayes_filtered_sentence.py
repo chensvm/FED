@@ -7,6 +7,7 @@ import math
 from nltk.corpus import stopwords
 from datetime import timedelta, date
 import pandas as pd
+import nltk
 
 
 def loadDataSet():
@@ -44,16 +45,19 @@ def loadDataSet():
 
                         else:
                             for news in data:
-                                regEx = re.compile('\\W*')
-                                listOfTokens = regEx.split(news)
-                                listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                                filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
 
-                                posNum += 1
-                                #準備posting list
-                                postingList.append(filtered_words)
-                                # 同時建立一個分類向量搭配
-                                classVec.append(1)
+                                for item in tokenizer.tokenize(news):
+
+                                    regEx = re.compile('\\W*')
+                                    listOfTokens = regEx.split(item)
+                                    listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                                    filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+
+                                    posNum += 1
+                                    #準備posting list
+                                    postingList.append(filtered_words)
+                                    # 同時建立一個分類向量搭配
+                                    classVec.append(1)
 
                     myfile.close()
 
@@ -79,14 +83,16 @@ def loadDataSet():
 
                             for news in data:
 
-                                regEx = re.compile('\\W*')
-                                listOfTokens = regEx.split(news)
-                                listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                                filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+                                for item in tokenizer.tokenize(news):
 
-                                negNum += 1
-                                postingList.append(filtered_words)
-                                classVec.append(-1)
+                                    regEx = re.compile('\\W*')
+                                    listOfTokens = regEx.split(item)
+                                    listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                                    filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+
+                                    negNum += 1
+                                    postingList.append(filtered_words)
+                                    classVec.append(-1)
 
                     myfile.close()
 
@@ -113,14 +119,16 @@ def loadDataSet():
 
                             for news in data:
 
-                                regEx = re.compile('\\W*')
-                                listOfTokens = regEx.split(news)
-                                listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                                filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+                                for item in tokenizer.tokenize(news):
 
-                                neutralNum += 1
-                                postingList.append(filtered_words)
-                                classVec.append(0)
+                                    regEx = re.compile('\\W*')
+                                    listOfTokens = regEx.split(item)
+                                    listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                                    filtered_words = [word for word in listOfTokens if word not in stopwords.words('english')]
+
+                                    neutralNum += 1
+                                    postingList.append(filtered_words)
+                                    classVec.append(0)
 
                     myfile.close()
 
@@ -282,7 +290,7 @@ def testingNB():
     # listClasses is classVec
     testEntry =[]
 
-    ff = open('result.csv', 'w')
+    ff = open('result_filtered_sentence.csv', 'w')
     ff.write("date,rate\n")
 
     with open('../fed_rates/fed_date_rate_testing.csv', 'r') as c1:
@@ -313,19 +321,25 @@ def testingNB():
 
                     else:
                         for news in data:
-                            regEx = re.compile('\\W*')
-                            listOfTokens = regEx.split(news)
-                            listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
-                            filtered_words = [word for word in listOfTokens if
-                                              word not in stopwords.words('english')]
-                            testEntry.append(filtered_words)
+
+                            for item in tokenizer.tokenize(news):
+                                testEntry = []
+
+                                regEx = re.compile('\\W*')
+                                listOfTokens = regEx.split(item)
+                                listOfTokens = [tok.lower().encode('utf-8') for tok in listOfTokens if len(tok) > 0]
+                                filtered_words = [word for word in listOfTokens if
+                                                  word not in stopwords.words('english')]
+                                testEntry.append(filtered_words)
+
+                                thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))
+
+                                ff.write(cur_year + '-' + cur_month + '-' + cur_day + ',' + str(
+                                    classifyNB(thisDoc, p0V, p1V, pNeV, pPosi, pNeg)) + "\n")
 
             prevRow = row[0]
 
-            thisDoc = np.array(setOfWords2Vec(myVocabList, testEntry))
 
-            ff.write(cur_year + '-' + cur_month + '-' + cur_day + ',' + str(
-                classifyNB(thisDoc, p0V, p1V, pNeV, pPosi, pNeg)) + "\n")
 
             print "######## finish one section ########"
 
@@ -374,5 +388,7 @@ def daterange(start_date, end_date):
 
 if __name__ == '__main__':
 
+    tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+
     testingNB()
-    errorRate()
+    #errorRate()
