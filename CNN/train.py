@@ -13,9 +13,13 @@ from tensorflow.contrib import learn
 # ==================================================
 
 # Data loading params
-tf.flags.DEFINE_float("dev_sample_percentage", .1, "Percentage of the training data to use for validation")
-tf.flags.DEFINE_string("positive_data_file", "./data/rt-polaritydata/rt-polarity.pos", "Data source for the positive data.")
-tf.flags.DEFINE_string("negative_data_file", "./data/rt-polaritydata/rt-polarity.neg", "Data source for the negative data.")
+tf.flags.DEFINE_float("dev_sample_percentage", .002, "Percentage of the training data to use for validation")
+# tf.flags.DEFINE_string("positive_data_file", "./data/rt-polaritydata/rt-polarity.pos", "Data source for the positive data.")
+# tf.flags.DEFINE_string("negative_data_file", "./data/rt-polaritydata/rt-polarity.neg", "Data source for the negative data.")
+# tf.flags.DEFINE_string("positive_data_file", "./data/article-polaritydata/training_data_remove_past_polarity.pos", "Data source for the positive data.")
+# tf.flags.DEFINE_string("negative_data_file", "./data/article-polaritydata/training_data_remove_past_polarity.neg", "Data source for the negative data.")
+tf.flags.DEFINE_string("positive_data_file", "./data/article-polaritydata/training_article_remove_past_polarity.pos", "Data source for the positive data.")
+tf.flags.DEFINE_string("negative_data_file", "./data/article-polaritydata/training_article_remove_past_polarity.neg", "Data source for the negative data.")
 
 # Model Hyperparameters
 tf.flags.DEFINE_integer("embedding_dim", 128, "Dimensionality of character embedding (default: 128)")
@@ -33,6 +37,7 @@ tf.flags.DEFINE_integer("num_checkpoints", 5, "Number of checkpoints to store (d
 # Misc Parameters
 tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device placement")
 tf.flags.DEFINE_boolean("log_device_placement", False, "Log placement of ops on devices")
+tf.flags.DEFINE_float("gpu_percentage", 0.5, "GPU fraction usage")
 
 FLAGS = tf.flags.FLAGS
 FLAGS._parse_flags()
@@ -48,6 +53,10 @@ print("")
 # Load data
 print("Loading data...")
 x_text, y = data_helpers.load_data_and_labels(FLAGS.positive_data_file, FLAGS.negative_data_file)
+print("==================================")
+print("> len(x_text):{}".format(len(x_text)))
+print("> len(y):{}".format(len(y)))
+print("==================================")
 
 # Build vocabulary
 max_document_length = max([len(x.split(" ")) for x in x_text])
@@ -71,11 +80,13 @@ print("Train/Dev split: {:d}/{:d}".format(len(y_train), len(y_dev)))
 
 # Training
 # ==================================================
+loss_file = ''
 
 with tf.Graph().as_default():
     session_conf = tf.ConfigProto(
       allow_soft_placement=FLAGS.allow_soft_placement,
       log_device_placement=FLAGS.log_device_placement)
+    session_conf.gpu_options.per_process_gpu_memory_fraction=FLAGS.gpu_percentage
     sess = tf.Session(config=session_conf)
     with sess.as_default():
         cnn = TextCNN(
@@ -128,6 +139,10 @@ with tf.Graph().as_default():
         if not os.path.exists(checkpoint_dir):
             os.makedirs(checkpoint_dir)
         saver = tf.train.Saver(tf.global_variables(), max_to_keep=FLAGS.num_checkpoints)
+        # global loss_file
+        loss_file = os.path.join(out_dir, "train_loss.txt")
+        with open(loss_file,'w') as fout:
+            fout.write('')
 
         # Write vocabulary
         vocab_processor.save(os.path.join(out_dir, "vocab"))
@@ -149,6 +164,9 @@ with tf.Graph().as_default():
                 feed_dict)
             time_str = datetime.datetime.now().isoformat()
             print("{}: step {}, loss {:g}, acc {:g}".format(time_str, step, loss, accuracy))
+            # global loss_file
+            with open(loss_file,'a') as fout:
+                fout.write("step:{}, loss:{:.4f}, acc:{:.4f}\n".format(step,loss,accuracy))
             train_summary_writer.add_summary(summaries, step)
 
         def dev_step(x_batch, y_batch, writer=None):

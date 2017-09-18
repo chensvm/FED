@@ -14,8 +14,8 @@ import csv
 # ==================================================
 
 # Data Parameters
-tf.flags.DEFINE_string("positive_data_file", "./data/rt-polaritydata/rt-polarity.pos", "Data source for the positive data.")
-tf.flags.DEFINE_string("negative_data_file", "./data/rt-polaritydata/rt-polarity.neg", "Data source for the positive data.")
+tf.flags.DEFINE_string("positive_data_file", "./data/article-polaritydata/testing_data_polarity.pos", "Data source for the positive data.")
+tf.flags.DEFINE_string("negative_data_file", "./data/article-polaritydata/testing_data_polarity.neg", "Data source for the positive data.")
 
 # Eval Parameters
 tf.flags.DEFINE_integer("batch_size", 64, "Batch Size (default: 64)")
@@ -25,7 +25,7 @@ tf.flags.DEFINE_boolean("eval_train", False, "Evaluate on all training data")
 # Misc Parameters
 tf.flags.DEFINE_boolean("allow_soft_placement", True, "Allow device soft device placement")
 tf.flags.DEFINE_boolean("log_device_placement", False, "Log placement of ops on devices")
-
+tf.flags.DEFINE_float("gpu_percentage", 0.1, "GPU fraction usage")
 
 FLAGS = tf.flags.FLAGS
 FLAGS._parse_flags()
@@ -57,6 +57,7 @@ with graph.as_default():
     session_conf = tf.ConfigProto(
       allow_soft_placement=FLAGS.allow_soft_placement,
       log_device_placement=FLAGS.log_device_placement)
+    session_conf.gpu_options.per_process_gpu_memory_fraction=FLAGS.gpu_percentage
     sess = tf.Session(config=session_conf)
     with sess.as_default():
         # Load the saved meta graph and restore variables
