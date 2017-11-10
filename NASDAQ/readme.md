@@ -1,4 +1,4 @@
-# prices & labels(rise,fall) of NASDAQ100 index from 2000-01-01 to 2015-01-01
+prices & labels(rise,fall) of NASDAQ100 index from 2000-01-01 to 2015-01-01
 
 #
 
