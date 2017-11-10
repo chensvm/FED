@@ -1,4 +1,10 @@
-## label_NASDAQ100_20000101_20150101.csv
+# prices & labels(rise,fall) of NASDAQ100 index from 2000-01-01 to 2015-01-01
+
+#
+
+---
+
+### label_NASDAQ100_20000101_20150101.csv
 
 #### first line of file contains header:  
 > Date,Close
@@ -27,7 +33,7 @@ Date,Close
 ---
 ---
 
-## price_NASDAQ100_20000101_20150101.csv
+### price_NASDAQ100_20000101_20150101.csv
 
 #### first line of file contains header:  
 > Date,Close
