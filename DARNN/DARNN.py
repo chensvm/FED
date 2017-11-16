@@ -1,5 +1,7 @@
 # coding: utf-8
 
+# check whether it is updated
+
 import pandas as pd
 import os
 import numpy as np
@@ -8,6 +10,7 @@ from sklearn.preprocessing import MinMaxScaler
 #from tensorflow.models.rnn import *
 from tensorflow.contrib import rnn
 import os
+
 
 
 

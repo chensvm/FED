@@ -103,9 +103,20 @@ import tensorflow as tf
 # Read the data into a list of strings.
 def read_data(filename):
   """Extract the first file enclosed in a zip file as a list of words."""
-  with zipfile.ZipFile(filename) as f:
-    data = tf.compat.as_str(f.read(f.namelist()[0])).split()
-  return data
+    with open(filename,'r') as myfile:
+
+        data = np.load(myfile)
+
+        if data.size == 0:
+            pass
+
+        else:
+            for news in data:
+
+                print news
+                print "%%%%%%%%%%%%"
+                data_r = tf.compat.as_str(news).split()
+  return data_r
 
 vocabulary = read_data(filename)
 print('Data size', len(vocabulary))
@@ -113,6 +124,7 @@ print('Data size', len(vocabulary))
 # Step 2: Build the dictionary and replace rare words with UNK token.
 vocabulary_size = 50000
 
+#'../../../../tmp2/finance_data/filtered_articles_remove_past/' + "19991231.npy"
 
 def build_dataset(words, n_words):
   """Process raw inputs into a dataset."""

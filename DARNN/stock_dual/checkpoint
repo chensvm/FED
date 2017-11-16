@@ -1,0 +1,6 @@
+model_checkpoint_path: "dual_stage_26900.ckpt"
+all_model_checkpoint_paths: "dual_stage_15400.ckpt"
+all_model_checkpoint_paths: "dual_stage_16800.ckpt"
+all_model_checkpoint_paths: "dual_stage_20002.ckpt"
+all_model_checkpoint_paths: "dual_stage_25400.ckpt"
+all_model_checkpoint_paths: "dual_stage_26900.ckpt"
