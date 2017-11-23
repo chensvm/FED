@@ -1,0 +1,2525 @@
+nancycheng@cuda3:~/FED/DARNN$ I[Kpython dual_stage.py 
+pred:
+Tensor("add:0", shape=(?, 1), dtype=float32)
+2017-11-20 12:31:31.219890: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.1 instructions, but these are available on your machine and could speed up CPU computations.
+2017-11-20 12:31:31.219910: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use SSE4.2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-11-20 12:31:31.219915: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX instructions, but these are available on your machine and could speed up CPU computations.
+2017-11-20 12:31:31.219919: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use AVX2 instructions, but these are available on your machine and could speed up CPU computations.
+2017-11-20 12:31:31.219924: W tensorflow/core/platform/cpu_feature_guard.cc:45] The TensorFlow library wasn't compiled to use FMA instructions, but these are available on your machine and could speed up CPU computations.
+2017-11-20 12:31:31.864204: I tensorflow/core/common_runtime/gpu/gpu_device.cc:887] Found device 0 with properties: 
+name: Tesla K20c
+major: 3 minor: 5 memoryClockRate (GHz) 0.7055
+pciBusID 0000:03:00.0
+Total memory: 4.63GiB
+Free memory: 4.40GiB
+2017-11-20 12:31:31.864248: I tensorflow/core/common_runtime/gpu/gpu_device.cc:908] DMA: 0 
+2017-11-20 12:31:31.864258: I tensorflow/core/common_runtime/gpu/gpu_device.cc:918] 0:   Y 
+2017-11-20 12:31:31.864274: I tensorflow/core/common_runtime/gpu/gpu_device.cc:977] Creating TensorFlow device (/gpu:0) -> (device: 0, name: Tesla K20c, pci bus id: 0000:03:00.0)
+finish reading data
+2017-11-20 12:31:32.674122: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:247] PoolAllocator: After 1382 get requests, put_count=1266 evicted_count=1000 eviction_rate=0.789889 and unsatisfied allocation rate=0.879884
+2017-11-20 12:31:32.674194: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:259] Raising pool_size_limit_ from 100 to 110
+2017-11-20 12:31:33.463811: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:247] PoolAllocator: After 1382 get requests, put_count=1601 evicted_count=1000 eviction_rate=0.62461 and unsatisfied allocation rate=0.581766
+2017-11-20 12:31:33.463850: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:259] Raising pool_size_limit_ from 256 to 281
+Iter 100, Minibatch Loss= nan
+dual_stage.py:139: RuntimeWarning: invalid value encountered in divide
+  loss_val1 = sess.run(cost, feed_dict)/len(val_y)
+validation Accuracy: nan
+#######prediction
+[]
+dual_stage.py:152: RuntimeWarning: invalid value encountered in divide
+  loss_test1 = sess.run(cost, feed_dict)/len(test_y)
+Testing Accuracy: nan
+Iter 200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+2017-11-20 12:31:47.680061: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:247] PoolAllocator: After 230906 get requests, put_count=230958 evicted_count=1000 eviction_rate=0.00432979 and unsatisfied allocation rate=0.00436108
+2017-11-20 12:31:47.680112: I tensorflow/core/common_runtime/gpu/pool_allocator.cc:259] Raising pool_size_limit_ from 655 to 720
+Iter 500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 1000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 1100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 1200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 1300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 1400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 1500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 1600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 1700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 1800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 1900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 2000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 2100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 2200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 2300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 2400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 2500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 2600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 2700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 2800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 2900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 3000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 3100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 3200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 3300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 3400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 3500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 3600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 3700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 3800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 3900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 4000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 4100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 4200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 4300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 4400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 4500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 4600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 4700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 4800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 4900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 5000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 5100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 5200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 5300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 5400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 5500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 5600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 5700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 5800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 5900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 6000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 6100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 6200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 6300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 6400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 6500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 6600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 6700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 6800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 6900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 7000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 7100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 7200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 7300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 7400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 7500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 7600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 7700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 7800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 7900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 8000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 8100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 8200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 8300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 8400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 8500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 8600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 8700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 8800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 8900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 9000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 9100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 9200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 9300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 9400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 9500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 9600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 9700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 9800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 9900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 10000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 10100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 10200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 10300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 10400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 10500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 10600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 10700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 10800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 10900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 11000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 11100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 11200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 11300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 11400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 11500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 11600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 11700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 11800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 11900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 12000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 12100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 12200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 12300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 12400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 12500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 12600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 12700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 12800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 12900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 13000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 13100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 13200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 13300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 13400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 13500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 13600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 13700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 13800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 13900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 14000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 14100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 14200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 14300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 14400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 14500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 14600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 14700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 14800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 14900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 15000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 15100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 15200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 15300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 15400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 15500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 15600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 15700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 15800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 15900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 16000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 16100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 16200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 16300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 16400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 16500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 16600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 16700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 16800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 16900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 17000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 17100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 17200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 17300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 17400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 17500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 17600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 17700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 17800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 17900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 18000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 18100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 18200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 18300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 18400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 18500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 18600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 18700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 18800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 18900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 19000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 19100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 19200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 19300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 19400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 19500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 19600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 19700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 19800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 19900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 20000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 20100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 20200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 20300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 20400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 20500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 20600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 20700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 20800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 20900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 21000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 21100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 21200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 21300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 21400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 21500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 21600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 21700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 21800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 21900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 22000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 22100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 22200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 22300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 22400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 22500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 22600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 22700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 22800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 22900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 23000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 23100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 23200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 23300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 23400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 23500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 23600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 23700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 23800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 23900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 24000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 24100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 24200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 24300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 24400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 24500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 24600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 24700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 24800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 24900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 25000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 25100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 25200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 25300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 25400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 25500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 25600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 25700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 25800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 25900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 26000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 26100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 26200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 26300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 26400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 26500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 26600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 26700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 26800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 26900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 27000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 27100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 27200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 27300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 27400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 27500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 27600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 27700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 27800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 27900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 28000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 28100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 28200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 28300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 28400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 28500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 28600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 28700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 28800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 28900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 29000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 29100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 29200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 29300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 29400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 29500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 29600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 29700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 29800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 29900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 30000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 30100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 30200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 30300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 30400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 30500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 30600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 30700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 30800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 30900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 31000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 31100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 31200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 31300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 31400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 31500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 31600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 31700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 31800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 31900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 32000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 32100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 32200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 32300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 32400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 32500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 32600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 32700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 32800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 32900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 33000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 33100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 33200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 33300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 33400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 33500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 33600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 33700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 33800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 33900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 34000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 34100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 34200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 34300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 34400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 34500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 34600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 34700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 34800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 34900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 35000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 35100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 35200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 35300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 35400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 35500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 35600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 35700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 35800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 35900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 36000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 36100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 36200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 36300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 36400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 36500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 36600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 36700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 36800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 36900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 37000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 37100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 37200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 37300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 37400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 37500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 37600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 37700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 37800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 37900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 38000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 38100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 38200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 38300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 38400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 38500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 38600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 38700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 38800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 38900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 39000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 39100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 39200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 39300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 39400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 39500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 39600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 39700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 39800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 39900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 40000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 40100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 40200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 40300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 40400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 40500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 40600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 40700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 40800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 40900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 41000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 41100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 41200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 41300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 41400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 41500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 41600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 41700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 41800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 41900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 42000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 42100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 42200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 42300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 42400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 42500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 42600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 42700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 42800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 42900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 43000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 43100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 43200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 43300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 43400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 43500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 43600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 43700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 43800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 43900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 44000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 44100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 44200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 44300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 44400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 44500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 44600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 44700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 44800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 44900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 45000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 45100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 45200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 45300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 45400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 45500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 45600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 45700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 45800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 45900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 46000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 46100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 46200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 46300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 46400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 46500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 46600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 46700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 46800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 46900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 47000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 47100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 47200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 47300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 47400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 47500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 47600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 47700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 47800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 47900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 48000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 48100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 48200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 48300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 48400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 48500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 48600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 48700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 48800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 48900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 49000, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 49100, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 49200, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 49300, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 49400, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 49500, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 49600, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 49700, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 49800, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Iter 49900, Minibatch Loss= nan
+validation Accuracy: nan
+#######prediction
+[]
+Testing Accuracy: nan
+Optimization Finished!
+nancycheng@cuda3:~/FED/DARNN$ 
