@@ -6,9 +6,6 @@ from tensorflow.contrib.rnn.python.ops import core_rnn_cell_impl as rnn_cell
 import attention_encoder
 import Generate_stock_data as GD
 
-gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.1)
-# sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-
 # Parameters
 learning_rate = 0.001
 training_iters = 50000
@@ -18,7 +15,6 @@ model_path = "./stock_dual/"
 
 # Network Parameters
 # encoder parameter
-
 n_input_encoder = 81 # n_feature of encoder input
 n_steps_encoder = 10 # time steps
 n_hidden_encoder = 128 # size of hidden units
@@ -64,9 +60,9 @@ def RNN(encoder_input, decoder_input, weights, biases, encoder_attention_states)
     # Encoder.
     with tf.variable_scope('encoder') as scope:
         encoder_cell = rnn_cell.BasicLSTMCell(n_hidden_encoder, forget_bias=1.0)
-        encoder_outputs, encoder_state, attn_weights = attention_encoder.attention_encoder(encoder_input, encoder_attention_states, encoder_cell)
+        encoder_outputs, encoder_state, attn_weights = attention_encoder.attention_encoder(encoder_input,
+                                         encoder_attention_states, encoder_cell)
 
-        
     # First calculate a concatenation of encoder outputs to put attention on.
     top_states = [tf.reshape(e, [-1, 1, encoder_cell.output_size]) for e in encoder_outputs]
     attention_states = tf.concat(top_states,1)
@@ -79,10 +75,6 @@ def RNN(encoder_input, decoder_input, weights, biases, encoder_attention_states)
     return tf.matmul(outputs[-1], weights['out1']) + biases['out1'], attn_weights
 
 pred, attn_weights = RNN(encoder_input, decoder_input, weights, biases, encoder_attention_states)
-
-print "pred:"
-print pred
-
 # Define loss and optimizer
 cost = tf.reduce_sum(tf.pow(tf.subtract(pred, decoder_gt), 2))
 loss = tf.pow(tf.subtract(pred, decoder_gt), 2)
@@ -97,35 +89,24 @@ loss_test=[]
 loss_val = []
 
 # Launch the graph
-with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
+with tf.Session() as sess:
     sess.run(init)
     step = 1
     count = 1
 
     # read the input data
     Data = GD.Input_data(batch_size, n_steps_encoder, n_steps_decoder, n_hidden_encoder)
-    print "finish reading data"
-  
-
     # Keep training until reach max iterations
     while step  < training_iters:
         # the shape of batch_x is (batch_size, n_steps, n_input)
         batch_x, batch_y, prev_y, encoder_states = Data.next_batch()
-
-
         feed_dict = {encoder_input: batch_x, decoder_gt: batch_y, decoder_input: prev_y,
                      encoder_attention_states:encoder_states}
-
         # Run optimization op (backprop)
-    
         sess.run(optimizer, feed_dict)
-
-       
-
         # display the result
         if step % display_step == 0:
             # Calculate batch loss
-
             loss = sess.run(cost, feed_dict)/batch_size
             print "Iter " + str(step) + ", Minibatch Loss= " + "{:.6f}".format(loss)
 
@@ -137,7 +118,6 @@ with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
             feed_dict = {encoder_input: val_x, decoder_gt: val_y, decoder_input: val_prev_y,
                          encoder_attention_states:encoder_states_val}
             loss_val1 = sess.run(cost, feed_dict)/len(val_y)
-            
             loss_val.append(loss_val1)
             print "validation Accuracy:", loss_val1
 
@@ -146,9 +126,6 @@ with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
             feed_dict = {encoder_input: test_x, decoder_gt: test_y, decoder_input: test_prev_y,
                          encoder_attention_states:encoder_states_test}
             pred_y=sess.run(pred, feed_dict)
-            print "#######prediction"
-            print pred_y
-            
             loss_test1 = sess.run(cost, feed_dict)/len(test_y)
             loss_test.append(loss_test1)
             print "Testing Accuracy:", loss_test1
@@ -165,8 +142,9 @@ with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
             learning_rate *= 0.1
             count = 0
             save_path = saver.save(sess, model_path  + 'dual_stage_' + str(step) + '.ckpt')
-                    
+
 
     print "Optimization Finished!"
+
 
 

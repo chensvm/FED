@@ -4,15 +4,12 @@ import pandas as pd
 class Input_data:
     def __init__(self, batch_size, n_step_encoder, n_step_decoder, n_hidden_encoder):                                   
         # read the data 
-        # data = pd.read_csv('../NASDAQ/price.csv')
         data = pd.read_csv('./nasdaq100_padding.csv')
         self.data = np.array(data)
         self.train_day = 90
         self.val_day = 7
         self.test_day = 7
-        
         minutes = 390
-        
         self.train = self.data[:self.train_day * minutes, :]
         self.val = self.data[self.train_day * minutes:(self.train_day + self.val_day) * minutes,:]
         self.test = self.data[(self.train_day + self.val_day) * minutes:(self.train_day + self.val_day + self.test_day) * minutes,:]
