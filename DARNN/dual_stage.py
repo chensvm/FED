@@ -144,6 +144,10 @@ with tf.Session() as sess:
             save_path = saver.save(sess, model_path  + 'dual_stage_' + str(step) + '.ckpt')
 
 
+    with open('result.txt', 'w') as f:
+        f.write(pred_y)
+        f.close()
+   
     print "Optimization Finished!"
 
 
