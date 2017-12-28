@@ -7,8 +7,8 @@ import pandas as pd
 import numpy as np
 
 
-with open ('nasdaq100_padding.csv', 'r') as f:
-    data = pd.read_csv('./nasdaq100_padding.csv')
+with open ('DARNN_stock.csv', 'r') as f:
+    data = pd.read_csv('./DARNN_stock.csv')
     data = np.array(data)
     train_day = 90
     val_day = 7

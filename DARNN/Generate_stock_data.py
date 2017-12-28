@@ -4,12 +4,12 @@ import pandas as pd
 class Input_data:
     def __init__(self, batch_size, n_step_encoder, n_step_decoder, n_hidden_encoder):                                   
         # read the data 
-        data = pd.read_csv('./nasdaq100_padding.csv')
+        data = pd.read_csv('./DARNN_stock.csv')
         self.data = np.array(data)
-        self.train_day = 90
-        self.val_day = 7
-        self.test_day = 7
-        minutes = 390
+        self.train_day = 65
+        self.val_day = 10
+        self.test_day = 10
+        minutes = 1
         self.train = self.data[:self.train_day * minutes, :]
         self.val = self.data[self.train_day * minutes:(self.train_day + self.val_day) * minutes,:]
         self.test = self.data[(self.train_day + self.val_day) * minutes:(self.train_day + self.val_day + self.test_day) * minutes,:]
@@ -19,6 +19,7 @@ class Input_data:
         self.n_hidden_state = n_hidden_encoder
         self.n_step_encoder = n_step_encoder
         self.n_step_decoder = n_step_decoder
+        
 
         self.n_train = len(self.train)
         self.n_val = len(self.val)
@@ -28,7 +29,9 @@ class Input_data:
         
         # data normalization
         self.mean = np.mean(self.train,axis=0)
+       
         self.stdev = np.std(self.train,axis=0)
+
         # in case the stdev=0,then we will get nan
         for i in range (len(self.stdev)):
             if self.stdev[i]<0.00000001:
@@ -53,6 +56,9 @@ class Input_data:
         label[:,0] = np.array(self.train[index + self.n_step_decoder, -1])                 
         encoder_states = np.swapaxes(batch_x, 1, 2)
         return batch_x, label, previous_y, encoder_states
+
+    def returnMean(self):
+        return self.mean, self.stdev
         
     def validation(self):  
         index = np.arange(0, self.n_val-self.n_step_decoder)

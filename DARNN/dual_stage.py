@@ -8,21 +8,21 @@ import Generate_stock_data as GD
 
 # Parameters
 learning_rate = 0.001
-training_iters = 50000
-batch_size = 128
-display_step = 100
+training_iters = 500 #50000
+batch_size = 48 #128
+display_step = 100 
 model_path = "./stock_dual/"
 
 # Network Parameters
 # encoder parameter
 n_input_encoder = 81 # n_feature of encoder input
-n_steps_encoder = 10 # time steps
-n_hidden_encoder = 128 # size of hidden units
+n_steps_encoder = 2 # time steps #10
+n_hidden_encoder = 48 # size of hidden units #128
 
 # decoder parameter
 n_input_decoder = 1
-n_steps_decoder = 9
-n_hidden_decoder = 128
+n_steps_decoder = 1 # 9
+n_hidden_decoder = 48 #128
 n_classes = 1 # size of the decoder output
 
 # tf Graph input
@@ -98,6 +98,7 @@ with tf.Session() as sess:
     Data = GD.Input_data(batch_size, n_steps_encoder, n_steps_decoder, n_hidden_encoder)
     # Keep training until reach max iterations
     while step  < training_iters:
+        
         # the shape of batch_x is (batch_size, n_steps, n_input)
         batch_x, batch_y, prev_y, encoder_states = Data.next_batch()
         feed_dict = {encoder_input: batch_x, decoder_gt: batch_y, decoder_input: prev_y,
@@ -133,7 +134,7 @@ with tf.Session() as sess:
             #save the parameters
             if loss_val1<=min(loss_val):
                 save_path = saver.save(sess, model_path  + 'dual_stage_' + str(step) + '.ckpt')
-
+        
         step += 1
         count += 1
 
@@ -143,12 +144,41 @@ with tf.Session() as sess:
             count = 0
             save_path = saver.save(sess, model_path  + 'dual_stage_' + str(step) + '.ckpt')
 
-
-    with open('result.txt', 'w') as f:
-        f.write(pred_y)
-        f.close()
    
-    print "Optimization Finished!"
+    mean, stdev = Data.returnMean()
+    testing_result = test_y*stdev[81] + mean[81]
+    pred_result = pred_y*stdev[81] + mean[81]
+
+    testing_sign = []
+    pred_sign = []
+
+    for i in range(1, len(testing_result)):
+        if testing_result[i] > testing_result[i-1]:
+            testing_sign.append(1)
+        elif testing_result[i] < testing_result[i-1]:
+            testing_sign.append(-1)
+        else:
+            testing_sign.append(0)
+    for j in range(1, len(pred_result)):
+        if pred_result[i] > pred_result[i-1]:
+            pred_sign.append(1)
+        elif pred_result[i] < pred_result[i-1]:
+            pred_sign.append(-1)
+        else:
+            pred_sign.append(0)
+
+    num_accu = 0
+
+    for x in range(0, len(pred_sign)):
+        if testing_sign[x] == pred_sign[x]:
+            num_accu += 1
+   
+    accuracy = float(num_accu)/float(len(pred_sign))
+    print "Accuracy for %d day(s): %f" %(len(pred_sign), accuracy)
+
+
+
+
 
 
 
