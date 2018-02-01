@@ -8,21 +8,21 @@ import Generate_stock_data as GD
 
 # Parameters
 learning_rate = 0.001
-training_iters = 500 #50000
-batch_size = 48 #128
+training_iters = 1000 #50000
+batch_size = 64 #128
 display_step = 100 
 model_path = "./stock_dual/"
 
 # Network Parameters
 # encoder parameter
-n_input_encoder = 81 # n_feature of encoder input
+n_input_encoder = 81 + 150 # n_feature of encoder input
 n_steps_encoder = 2 # time steps #10
-n_hidden_encoder = 48 # size of hidden units #128
+n_hidden_encoder = 64 # size of hidden units #128
 
 # decoder parameter
 n_input_decoder = 1
 n_steps_decoder = 1 # 9
-n_hidden_decoder = 48 #128
+n_hidden_decoder = 64 #128
 n_classes = 1 # size of the decoder output
 
 # tf Graph input
@@ -109,7 +109,7 @@ with tf.Session() as sess:
         if step % display_step == 0:
             # Calculate batch loss
             loss = sess.run(cost, feed_dict)/batch_size
-            print "Iter " + str(step) + ", Minibatch Loss= " + "{:.6f}".format(loss)
+            # print "Iter " + str(step) + ", Minibatch Loss= " + "{:.6f}".format(loss)
 
             #store the value
             loss_value.append(loss)
@@ -120,7 +120,7 @@ with tf.Session() as sess:
                          encoder_attention_states:encoder_states_val}
             loss_val1 = sess.run(cost, feed_dict)/len(val_y)
             loss_val.append(loss_val1)
-            print "validation Accuracy:", loss_val1
+            # print "validation Accuracy:", loss_val1
 
             # testing
             test_x, test_y, test_prev_y, encoder_states_test= Data.testing()
@@ -129,7 +129,7 @@ with tf.Session() as sess:
             pred_y=sess.run(pred, feed_dict)
             loss_test1 = sess.run(cost, feed_dict)/len(test_y)
             loss_test.append(loss_test1)
-            print "Testing Accuracy:", loss_test1
+            # print "Testing Accuracy:", loss_test1
 
             #save the parameters
             if loss_val1<=min(loss_val):
@@ -146,35 +146,57 @@ with tf.Session() as sess:
 
    
     mean, stdev = Data.returnMean()
-    testing_result = test_y*stdev[81] + mean[81]
-    pred_result = pred_y*stdev[81] + mean[81]
+    testing_result = test_y*stdev[231] + mean[231]
+    pred_result = pred_y*stdev[231] + mean[231]
 
     testing_sign = []
     pred_sign = []
+    ind = len(testing_result)-1
 
-    for i in range(1, len(testing_result)):
-        if testing_result[i] > testing_result[i-1]:
-            testing_sign.append(1)
-        elif testing_result[i] < testing_result[i-1]:
-            testing_sign.append(-1)
-        else:
-            testing_sign.append(0)
-    for j in range(1, len(pred_result)):
-        if pred_result[i] > pred_result[i-1]:
+    if testing_result[ind] > testing_result[ind-1]:
+        testing_sign.append(1)
+    elif testing_result[ind] < testing_result[ind-1]:
+        testing_sign.append(-1)
+    else:
+        testing_sign.append(0)
+
+    if pred_result[ind] > pred_result[ind-1]:
             pred_sign.append(1)
-        elif pred_result[i] < pred_result[i-1]:
-            pred_sign.append(-1)
-        else:
-            pred_sign.append(0)
+    elif pred_result[ind] < pred_result[ind-1]:
+        pred_sign.append(-1)
+    else:
+        pred_sign.append(0)
+
+    # for i in range( 1 , len(testing_result)):
+    #     if testing_result[i] > testing_result[i-1]:
+    #         testing_sign.append(1)
+    #     elif testing_result[i] < testing_result[i-1]:
+    #         testing_sign.append(-1)
+    #     else:
+    #         testing_sign.append(0)
+    # for j in range(1, len(pred_result)):
+    #     if pred_result[i] > pred_result[i-1]:
+    #         pred_sign.append(1)
+    #     elif pred_result[i] < pred_result[i-1]:
+    #         pred_sign.append(-1)
+    #     else:
+    #         pred_sign.append(0)
 
     num_accu = 0
 
     for x in range(0, len(pred_sign)):
         if testing_sign[x] == pred_sign[x]:
             num_accu += 1
+
+    print "testing data:"
+    print testing_result
+
+    print testing_sign
+    print pred_sign
    
     accuracy = float(num_accu)/float(len(pred_sign))
     print "Accuracy for %d day(s): %f" %(len(pred_sign), accuracy)
+    
 
 
 

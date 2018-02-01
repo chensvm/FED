@@ -5,10 +5,12 @@ class Input_data:
     def __init__(self, batch_size, n_step_encoder, n_step_decoder, n_hidden_encoder):                                   
         # read the data 
         data = pd.read_csv('./DARNN_stock.csv')
+        
+    
         self.data = np.array(data)
-        self.train_day = 65
+        self.train_day =  73 # start from 65     
         self.val_day = 10
-        self.test_day = 10
+        self.test_day = 3
         minutes = 1
         self.train = self.data[:self.train_day * minutes, :]
         self.val = self.data[self.train_day * minutes:(self.train_day + self.val_day) * minutes,:]
