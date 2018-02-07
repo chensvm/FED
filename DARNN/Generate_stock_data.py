@@ -8,7 +8,7 @@ class Input_data:
         
     
         self.data = np.array(data)
-        self.train_day =  73 # start from 65     
+        self.train_day =  65 # start from 65     
         self.val_day = 10
         self.test_day = 3
         minutes = 1

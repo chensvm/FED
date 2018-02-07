@@ -2,7 +2,6 @@
 
 from gensim.models import Doc2Vec
 import gensim
-import datetime
 import numpy as np
 import collections
 import datetime
@@ -55,6 +54,7 @@ with open ('company.csv', 'r') as fin, open ('DARNN_stock.csv', 'w') as fout:
         for row in reader:
             year, mon, day = row[0].split('-')
             date = row[0].replace('-', '')
+            print date
             if os.path.isfile('../../../../tmp/finance/nytimes/business_news_and_title/' + str(year) + '/' + str(date) + ".npy"):
                 with open('../../../../tmp/finance/nytimes/business_news_and_title/' + str(year) + '/' + str(date) + ".npy", 'r') as myfile:
                     listOfToken = []
