@@ -2,13 +2,12 @@ import numpy as np
 import random
 import pandas as pd
 class Input_data:
-    def __init__(self, batch_size, n_step_encoder, n_step_decoder, n_hidden_encoder):                                   
+    def __init__(self, batch_size, n_step_encoder, n_step_decoder, n_hidden_encoder, i):                                   
         # read the data 
-        data = pd.read_csv('./DARNN_stock.csv')
+        data = pd.read_csv('./Data/DARNN_eikon.csv')
         
-    
         self.data = np.array(data)
-        self.train_day =  65 # start from 65     
+        self.train_day =  51 + i # start from 62 ~ 70     
         self.val_day = 10
         self.test_day = 3
         minutes = 1

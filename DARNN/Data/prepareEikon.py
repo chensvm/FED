@@ -8,7 +8,7 @@ import numpy as np
 def getDirectory():
     with open ('ind_name.txt', 'w') as f:
 
-        files = os.listdir('../pyeikon/dataset/ind')
+        files = os.listdir('../../pyeikon/dataset/ind')
 
         for item in files:
             f.write(str(item)+'\n')
@@ -20,10 +20,10 @@ def daterange(start_date, end_date):
         yield start_date + timedelta(n)
 
 def getFirstIndex():
-    start_date = date(2017, 8, 19)
+    start_date = date(2010, 1, 1)
     end_date = date(2017, 12, 21)
     
-    with open ('eikon_data.csv', 'w') as fout, open ('../pyeikon/dataset/ind/.AXJO.csv') as fin:
+    with open ('eikon_data.csv', 'w') as fout, open ('../../pyeikon/dataset/ind/.AXJO.csv') as fin:
         writer = csv.writer(fout)
         reader = csv.reader(fin)
         reader.next()
@@ -45,7 +45,7 @@ def combineIndex():
 
     for item in inds:
 
-        with open ('../pyeikon/dataset/ind/'+str(item), 'r') as fin:
+        with open ('../../pyeikon/dataset/ind/'+str(item), 'r') as fin:
             reader = csv.reader(fin)
             reader.next()
             value = []
@@ -70,10 +70,33 @@ def cleanData():
         reader = csv.reader(fin)
         writer = csv.writer(fout)
         for row in reader:
-            writer.writerow(row[1:])             
+            writer.writerow(row[1:])
+
+def upDown():
+    with open ('../../pyeikon/dataset/ind/US10YT=RR.csv', 'r') as fin, open ('US10YT_eikon.csv', 'w') as fout:
+        df = pd.read_csv('../../pyeikon/dataset/ind/US10YT=RR.csv')
+        da = list(df['CLOSE'])
+        value = ['']
+        reader = csv.reader(fin)
+        writer = csv.writer(fout)
+        print da[len(da)-1]
+        for i in range(1, len(da)-1):
+            if da[i] > da[i-1]:
+                value.append(1)
+            elif da[i] < da[i-1]:
+                value.append(-1)
+            else:
+                value.append(0)
+
+    df1 = pd.DataFrame()      
+    df2 = pd.DataFrame({'y': value})
+    df1['Date'] = df['Date']
+    df1['y'] = df2
+    df1.to_csv('US10YT_eikon.csv', index=False)           
 
 if __name__ == "__main__":
 
-    # getFirstIndex()
-    # combineIndex()
+    getFirstIndex()
+    combineIndex()
     cleanData()
+    # upDown()

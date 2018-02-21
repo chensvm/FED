@@ -4,7 +4,8 @@ from __future__ import print_function
 
 # We disable pylint because we need python3 compatibility.
 from six.moves import xrange  # pylint: disable=redefined-builtin
-from tensorflow.contrib.rnn.python.ops import core_rnn_cell_impl
+# from tensorflow.contrib.rnn.python.ops import core_rnn_cell_impl
+from tensorflow.python.ops import rnn_cell_impl
 from tensorflow.python.framework import dtypes
 from tensorflow.python.framework import ops
 from tensorflow.python.ops import array_ops
@@ -14,7 +15,8 @@ from tensorflow.python.ops import variable_scope
 from tensorflow.python.util import nest
 
 # TODO(ebrevdo): Remove once _linear is fully deprecated.
-linear = core_rnn_cell_impl._linear  # pylint: disable=protected-access
+# linear = core_rnn_cell_impl._linear  # pylint: disable=protected-access
+linear = rnn_cell_impl._linear
 
 def attention_encoder(encoder_inputs, attention_states, cell,
                       output_size=None, num_heads=1,
