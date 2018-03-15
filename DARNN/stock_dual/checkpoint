@@ -1,3 +1,6 @@
-model_checkpoint_path: "dual_stage_200.ckpt"
+model_checkpoint_path: "dual_stage_900.ckpt"
 all_model_checkpoint_paths: "dual_stage_100.ckpt"
-all_model_checkpoint_paths: "dual_stage_200.ckpt"
+all_model_checkpoint_paths: "dual_stage_400.ckpt"
+all_model_checkpoint_paths: "dual_stage_500.ckpt"
+all_model_checkpoint_paths: "dual_stage_800.ckpt"
+all_model_checkpoint_paths: "dual_stage_900.ckpt"

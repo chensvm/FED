@@ -7,6 +7,7 @@ from tensorflow.contrib.rnn.python.ops import rnn
 from tensorflow.python.ops import rnn_cell_impl as rnn_cell
 import attention_encoder
 import Generate_stock_data as GD
+import pandas as pd
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #Disable Tensorflow debugging message
 
 def RNN(encoder_input, decoder_input, weights, biases, encoder_attention_states):
@@ -48,24 +49,26 @@ def RNN(encoder_input, decoder_input, weights, biases, encoder_attention_states)
 
     return tf.matmul(outputs[-1], weights['out1']) + biases['out1'], attn_weights
 
-
+all_pred_sign = []
+all_test_val = []
 num_accu = 0
+period =  1851 #21
 
-for i in range(0, 39):
+for i in range(0, period):
     tf.reset_default_graph()
 
     print i
     # Parameters
     learning_rate = 0.001
     training_iters = 1000 #50000
-    batch_size = 48 # 64 #128
+    batch_size = 48 # 64 #128 #48
     display_step = 100
     model_path = "./stock_dual/"
 
     # Network Parameters
     # encoder parameter
-    num_feature =  47 # number of index
-    n_input_encoder = 47 # n_feature of encoder input
+    num_feature =  47 # number of index #47 #231 #81
+    n_input_encoder =  47 # n_feature of encoder input #47 #231 #81
     n_steps_encoder = 2 # time steps #10
     n_hidden_encoder = 64 # size of hidden units #128
 
@@ -163,6 +166,9 @@ for i in range(0, 39):
         testing_result = test_y*stdev[num_feature] + mean[num_feature]
         pred_result = pred_y*stdev[num_feature] + mean[num_feature]
 
+       
+        
+
         testing_sign = []
         pred_sign = []
         ind = len(testing_result)-1
@@ -176,12 +182,14 @@ for i in range(0, 39):
 
         if pred_result[ind] > pred_result[ind-1]:
                 pred_sign.append(1)
+                all_pred_sign.append(1)
         elif pred_result[ind] < pred_result[ind-1]:
             pred_sign.append(-1)
+            all_pred_sign.append(-1)
         else:
             pred_sign.append(0)
+            all_pred_sign.append(0)
 
-        
 
         for x in range(0, len(pred_sign)):
             if testing_sign[x] == pred_sign[x]:
@@ -193,12 +201,21 @@ for i in range(0, 39):
         print "prediction data:"
         print pred_result
 
+        all_test_val.append(testing_result)
+
         print testing_sign
         print pred_sign
-   
-    
-accuracy = float(num_accu)/float(i+1)
-print "Accuracy for %d day(s): %f" %(i+1, accuracy)
+
+        print all_pred_sign
+
+
+
+accuracy = float(num_accu)/float(period+1)
+print "Accuracy for %d day(s): %f" %(period+1, accuracy)
+
+df = pd.DataFrame(all_pred_sign, columns=["pred_sign"])
+df.to_csv('pred_sign.csv', index=False)
+
     
 
 

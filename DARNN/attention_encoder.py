@@ -136,6 +136,6 @@ def attention_encoder(encoder_inputs, attention_states, cell,
 
             outputs.append(output)
             attn_weights.append(attns)
-
+            
     return outputs, state, attn_weights
 

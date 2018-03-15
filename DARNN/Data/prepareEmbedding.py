@@ -14,8 +14,8 @@ import pandas_datareader.data
 from pandas import Series, DataFrame
 from pandas_datareader._utils import RemoteDataError
 
-start_date = date(2005, 1, 1)
-end_date = date(2005, 1, 3)
+start_date = date(2010, 1, 4)
+end_date = date(2010, 5, 5)
 
 def daterange(start_date, end_date):
     for n in range(int((end_date - start_date).days)):
@@ -46,7 +46,7 @@ for single_date in daterange(start_date, end_date):
 
 model = Doc2Vec(documents, size=150, min_count=3, workers=4, iter = 3)
 
-with open ('company.csv', 'r') as fin, open ('DARNN_stock.csv', 'w') as fout:
+with open ('eikon_data.csv', 'r') as fin, open ('DARNN_stock_embedding.csv', 'w') as fout:
         # fin.next()
         reader = csv.reader(fin)
         reader.next()
@@ -80,10 +80,4 @@ with open ('company.csv', 'r') as fin, open ('DARNN_stock.csv', 'w') as fout:
                 writer.writerow(content)
 
 
-            # row.append()
-            
 
-
-        # writer = csv.writer(fout)
-        # for row in reader:
-        #     writer.writerow(row[1:])

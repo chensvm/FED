@@ -69,8 +69,17 @@ def cleanData():
         for row in reader:
             writer.writerow(row[1:])
 
+def deleteEmbedding():
+    with open ('DARNN_stock.csv', 'r') as fin, open ('DARNN_stock_num.csv', 'w') as fout:
+        # fin.next()
+        reader = csv.reader(fin)
+        writer = csv.writer(fout)
+        for row in reader:
+            writer.writerow(row[150:])
+
     
 
 if __name__ == '__main__':
-    getStock()
-    cleanData()
+    # getStock()
+    # cleanData()
+    deleteEmbedding()
