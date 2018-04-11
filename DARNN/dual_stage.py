@@ -1,4 +1,5 @@
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 import tensorflow as tf
 import numpy as np
 from tensorflow.contrib.legacy_seq2seq.python.ops import seq2seq
@@ -9,6 +10,7 @@ import attention_encoder
 import Generate_stock_data as GD
 import pandas as pd
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' #Disable Tensorflow debugging message
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.1)
 
 def RNN(encoder_input, decoder_input, weights, biases, encoder_attention_states):
 
@@ -49,32 +51,32 @@ def RNN(encoder_input, decoder_input, weights, biases, encoder_attention_states)
 
     return tf.matmul(outputs[-1], weights['out1']) + biases['out1'], attn_weights
 
+
 all_pred_sign = []
 all_test_val = []
 num_accu = 0
-period =  1851 #21
 
-for i in range(0, period):
+
+for i in range(101, 1000):
+    
     tf.reset_default_graph()
-
-    print i
     # Parameters
     learning_rate = 0.001
-    training_iters = 1000 #50000
-    batch_size = 48 # 64 #128 #48
+    training_iters = 500 #10000
+    batch_size = 72
     display_step = 100
     model_path = "./stock_dual/"
 
     # Network Parameters
     # encoder parameter
-    num_feature =  47 # number of index #47 #231 #81
-    n_input_encoder =  47 # n_feature of encoder input #47 #231 #81
-    n_steps_encoder = 2 # time steps #10
+    num_feature =  45 # number of index 
+    n_input_encoder =  45 # n_feature of encoder input 
+    n_steps_encoder = 2 # time steps #2
     n_hidden_encoder = 64 # size of hidden units #128
 
     # decoder parameter
     n_input_decoder = 1
-    n_steps_decoder = 1 # 9
+    n_steps_decoder = 1 # 1
     n_hidden_decoder = 64 #128
     n_classes = 1 # size of the decoder output
 
@@ -90,6 +92,7 @@ for i in range(0, period):
 
 
     pred, attn_weights = RNN(encoder_input, decoder_input, weights, biases, encoder_attention_states)
+
     # Define loss and optimizer
     cost = tf.reduce_sum(tf.pow(tf.subtract(pred, decoder_gt), 2))
     loss = tf.pow(tf.subtract(pred, decoder_gt), 2)
@@ -104,9 +107,7 @@ for i in range(0, period):
     loss_val = []
 
     # Launch the graph
-
-
-    with tf.Session() as sess:
+    with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
         sess.run(init)
         step = 1
         count = 1
@@ -115,7 +116,6 @@ for i in range(0, period):
         Data = GD.Input_data(batch_size, n_steps_encoder, n_steps_decoder, n_hidden_encoder, i)
         # Keep training until reach max iterations
         while step  < training_iters:
-            
             # the shape of batch_x is (batch_size, n_steps, n_input)
             batch_x, batch_y, prev_y, encoder_states = Data.next_batch()
             feed_dict = {encoder_input: batch_x, decoder_gt: batch_y, decoder_input: prev_y,
@@ -151,7 +151,7 @@ for i in range(0, period):
                 #save the parameters
                 if loss_val1<=min(loss_val):
                     save_path = saver.save(sess, model_path  + 'dual_stage_' + str(step) + '.ckpt')
-            
+
             step += 1
             count += 1
 
@@ -162,13 +162,13 @@ for i in range(0, period):
                 save_path = saver.save(sess, model_path  + 'dual_stage_' + str(step) + '.ckpt')
 
 
+        # print "Optimization Finished!"
+
+
         mean, stdev = Data.returnMean()
         testing_result = test_y*stdev[num_feature] + mean[num_feature]
         pred_result = pred_y*stdev[num_feature] + mean[num_feature]
-
-       
         
-
         testing_sign = []
         pred_sign = []
         ind = len(testing_result)-1
@@ -201,20 +201,21 @@ for i in range(0, period):
         print "prediction data:"
         print pred_result
 
-        all_test_val.append(testing_result)
+        all_test_val.append(testing_result[ind])
 
+        print "testing_sign:"
         print testing_sign
+        print "pred_sign:"
         print pred_sign
+        
 
-        print all_pred_sign
+        # print all_pred_sign
+        temp_accuracy = float(num_accu)/float(len(all_pred_sign))
+        print "Accuracy for %d day(s): %f" %(len(all_pred_sign), temp_accuracy)
 
-
-
-accuracy = float(num_accu)/float(period+1)
-print "Accuracy for %d day(s): %f" %(period+1, accuracy)
 
 df = pd.DataFrame(all_pred_sign, columns=["pred_sign"])
-df.to_csv('pred_sign.csv', index=False)
+df.to_csv('pred_sign_2.csv', index=False)
 
     
 

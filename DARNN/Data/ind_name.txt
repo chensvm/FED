@@ -41,7 +41,5 @@ EUR=.csv
 GCc1.csv
 TED.csv
 .TRXFLDUSP.csv
-CH10YT=RR.csv
-ECBMRO=.csv
 CLc1.csv
 US10YT=RR.csv

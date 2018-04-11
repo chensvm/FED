@@ -94,9 +94,14 @@ def upDown():
     df1['y'] = df2
     df1.to_csv('US10YT_eikon.csv', index=False)           
 
+
+
+
+
 if __name__ == "__main__":
 
     getFirstIndex()
     combineIndex()
     cleanData()
     # upDown()
+    

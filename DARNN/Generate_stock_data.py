@@ -7,14 +7,15 @@ class Input_data:
         data = pd.read_csv('./Data/DARNN_eikon.csv')
         
         self.data = np.array(data)
-        self.train_day =  51 + i # start from 62 ~ 70     
+        self.train_day =  90 # start from 62 ~ 70     
         self.val_day = 10
-        self.test_day = 3
+        self.test_day = 5
         minutes = 1
-        self.train = self.data[:self.train_day * minutes, :]
-        self.val = self.data[self.train_day * minutes:(self.train_day + self.val_day) * minutes,:]
-        self.test = self.data[(self.train_day + self.val_day) * minutes:(self.train_day + self.val_day + self.test_day) * minutes,:]
-      
+        
+        self.train = self.data[i : self.train_day+i, :]
+        self.val = self.data[(self.train_day + i ):(self.train_day + self.val_day + i),:]
+        self.test = self.data[(self.train_day + self.val_day+ i) :(self.train_day + self.val_day + self.test_day+i),:]
+
         # parameters for the network                 
         self.batch_size = batch_size
         self.n_hidden_state = n_hidden_encoder
@@ -35,11 +36,15 @@ class Input_data:
 
         # in case the stdev=0,then we will get nan
         for i in range (len(self.stdev)):
-            if self.stdev[i]<0.00000001:
+            if self.stdev[i] < 0.00000001:
                 self.stdev[i] = 1
+       
+    
         self.train = (self.train-self.mean)/self.stdev
         self.test = (self.test-self.mean)/self.stdev
         self.val = (self.val - self.mean)/self.stdev
+
+        
                          
     def next_batch(self):
         # generate of a random index from the range [0, self.n_train -self.n_step_decoder +1]                 
