@@ -1,2 +1,4 @@
-model_checkpoint_path: "dual_stage_100.ckpt"
+model_checkpoint_path: "dual_stage_1200.ckpt"
 all_model_checkpoint_paths: "dual_stage_100.ckpt"
+all_model_checkpoint_paths: "dual_stage_200.ckpt"
+all_model_checkpoint_paths: "dual_stage_1200.ckpt"

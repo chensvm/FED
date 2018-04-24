@@ -7,9 +7,9 @@ class Input_data:
         data = pd.read_csv('./Data/DARNN_eikon.csv')
         
         self.data = np.array(data)
-        self.train_day =  90 # start from 62 ~ 70     
-        self.val_day = 10
-        self.test_day = 5
+        self.train_day =  90*2 # start from 62 ~ 70     
+        self.val_day = 11
+        self.test_day = 11
         minutes = 1
         
         self.train = self.data[i : self.train_day+i, :]
@@ -98,4 +98,4 @@ class Input_data:
         encoder_states_test = np.swapaxes(test_x,1,2)
         return test_x, test_label, test_prev_y, encoder_states_test
     
- 
+  

@@ -53,17 +53,19 @@ def RNN(encoder_input, decoder_input, weights, biases, encoder_attention_states)
 
 
 all_pred_sign = []
+all_test_sign = []
+all_pred_val = []
 all_test_val = []
 num_accu = 0
 
 
-for i in range(101, 1000):
+for i in range(1650, 1680):
     
     tf.reset_default_graph()
     # Parameters
     learning_rate = 0.001
-    training_iters = 500 #10000
-    batch_size = 72
+    training_iters = 6000 #10000
+    batch_size  = 36
     display_step = 100
     model_path = "./stock_dual/"
 
@@ -71,12 +73,12 @@ for i in range(101, 1000):
     # encoder parameter
     num_feature =  45 # number of index 
     n_input_encoder =  45 # n_feature of encoder input 
-    n_steps_encoder = 2 # time steps #2
+    n_steps_encoder = 10 # time steps #2
     n_hidden_encoder = 64 # size of hidden units #128
 
     # decoder parameter
     n_input_decoder = 1
-    n_steps_decoder = 1 # 1
+    n_steps_decoder = 9 # 1
     n_hidden_decoder = 64 #128
     n_classes = 1 # size of the decoder output
 
@@ -107,7 +109,9 @@ for i in range(101, 1000):
     loss_val = []
 
     # Launch the graph
-    with tf.Session(config=tf.ConfigProto(gpu_options=gpu_options)) as sess:
+    # config=tf.ConfigProto(gpu_options=gpu_options)
+    with tf.Session() as sess:
+        
         sess.run(init)
         step = 1
         count = 1
@@ -175,14 +179,17 @@ for i in range(101, 1000):
 
         if testing_result[ind] > testing_result[ind-1]:
             testing_sign.append(1)
+            all_test_sign.append(1)
         elif testing_result[ind] < testing_result[ind-1]:
             testing_sign.append(-1)
+            all_test_sign.append(-1)
         else:
             testing_sign.append(0)
+            all_test_sign.append(0)
 
         if pred_result[ind] > pred_result[ind-1]:
-                pred_sign.append(1)
-                all_pred_sign.append(1)
+            pred_sign.append(1)
+            all_pred_sign.append(1)
         elif pred_result[ind] < pred_result[ind-1]:
             pred_sign.append(-1)
             all_pred_sign.append(-1)
@@ -190,38 +197,24 @@ for i in range(101, 1000):
             pred_sign.append(0)
             all_pred_sign.append(0)
 
+        if testing_sign[0] == pred_sign[0]:
+            num_accu += 1
 
-        for x in range(0, len(pred_sign)):
-            if testing_sign[x] == pred_sign[x]:
-                num_accu += 1
+        # print "testing data:"
+        # print testing_result
 
-        print "testing data:"
-        print testing_result
+        # print "prediction data:"
+        # print pred_result
 
-        print "prediction data:"
-        print pred_result
-
-        all_test_val.append(testing_result[ind])
-
-        print "testing_sign:"
-        print testing_sign
-        print "pred_sign:"
-        print pred_sign
+        all_test_val.append(str(testing_result[ind]).replace('[', '').replace(']', ''))
+        all_pred_val.append(str(pred_result[ind]).replace('[', '').replace(']', ''))
         
-
-        # print all_pred_sign
         temp_accuracy = float(num_accu)/float(len(all_pred_sign))
-        print "Accuracy for %d day(s): %f" %(len(all_pred_sign), temp_accuracy)
+        # print "Accuracy for %d day(s): %f" %(len(all_pred_sign), temp_accuracy)
 
-
+print "Accuracy for %d day(s): %f, with setting: iteration: %d, batch size: %d, hidden layer: %d, time step: %d, data from: %s to %s" %(len(all_pred_sign), temp_accuracy, training_iters, batch_size, n_hidden_decoder, n_steps_encoder, all_test_val[0], all_test_val[len(all_test_val)-1])
 df = pd.DataFrame(all_pred_sign, columns=["pred_sign"])
-df.to_csv('pred_sign_2.csv', index=False)
-
-    
-
-
-
-
-
-
-
+df.insert(loc=1, column='test_sign', value=all_test_sign)
+df.insert(loc=2, column='pred_val', value=all_pred_val)
+df.insert(loc=3, column='test_val', value=all_test_val)
+# df.to_csv('pred_sign_30day.csv', index=False)
